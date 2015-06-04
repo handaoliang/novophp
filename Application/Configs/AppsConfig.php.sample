@@ -1,0 +1,68 @@
+<?php
+/* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
+/**
+ * @package
+ * @file                 $RCSfile: WebConfig.php,v $
+ * @version              $Revision: 1.0 $
+ * @modifiedby           $Author: handaoliang $
+ * @lastmodified         $Date: 2012/04/10 12:02:11 $
+ * @copyright            Copyright (c) 2013, Comnovo Inc.
+**/
+/**
+ * 应用的全局配置文件
+**/
+
+
+//系统的WEB路径配置---------------------------------------------------------
+define("WEB_ROOT_PATH","http://www.novophp.com");//网页地址
+define("RES_ROOT_PATH","http://www.novophp.com/statics/");//网站图片及CSS等资源的路径。
+define("FILES_PATH","http://file.novophp.com");//文件资源的WEB路径。
+define("IMG_FILES_PATH","http://img.novophp.com");//图片文件资源的WEB路径。
+
+//Application路径，如果更改了 Application 目录名，则需要修改下面的配置。
+if(!defined("APPS_BASE_DIR")){//系统所在目录，应该在command.config.php目录的上两层。
+    define("APPS_BASE_DIR", dirname(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR."Application");
+}
+
+define("APPS_CONFIGS_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."Configs");//各应用的func及class文件的路径。
+define("APPS_LIBS_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."Libs");//各应用的func及class文件的路径。
+define("APPS_HELPERS_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."Helpers");//辅助类目录。
+define("APPS_MODELS_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."Models");//和数据库打交道的Models文件夹。
+define("APPS_VIEWS_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."Views");//模版文件夹。
+define("APPS_CONTROLLERS_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."Controllers");//MVC的C层控制文件目录
+define("APPS_WEB_ROOT_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."WebRoot");//网站可访问根目录。
+
+//Smarty缓存配置
+define("SMARTY_ALLOW_CACHE", true);//是否开启Smarty的缓存。
+define("SMARTY_CACHING_TYPE", "file");//Smarty的缓存方式，file|memcache
+define("SMARTY_CACHE_TIME", 24*60*60);//Smarty缓存文件存活时间。默认为24小时。
+define("SMARTY_DEBUGGING", false);//是否开启Smarty调试模式
+
+//如果是文件缓存，需要配置这个。
+define("APPS_CACHE_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."Cache");//缓存地址。
+define("SMARTY_CACHE_DIR", APPS_CACHE_DIR.DIRECTORY_SEPARATOR."smarty_cache");//Smarty的cache目录。
+define("SMARTY_TEMPLATES_C", APPS_CACHE_DIR.DIRECTORY_SEPARATOR."templates_c");//Smarty的编译目录。
+
+//如果是Redis缓存，需要配置这个。
+define("SMARTY_CACHE_MEMCACHE_ADDRESS", "127.0.0.1");
+define("SMARTY_CACHE_MEMCACHE_PORT", "11211");
+
+//Cookies && SESSION Configure
+define("COOKIES_DOMAIN", ".novophp.com");
+
+//加密Key
+define("ENCRYPT_PUB_KEY", "1992dbf1293dd2e92d6862f32570b153");
+define("ENCRYPT_PUB_KEY_BAK", "30fafebadc6284e8d3c4d0eebc8cd484");
+define("USER_PASSWORD_SALT", "a1cda863fbac2b95c29674601a144aa9");
+define("USER_COOKIE_TOKEN_SALT", "7b8cc9173ec0c1d1df626d1f8b464725");
+
+//PHPResque 配置
+define("RESQUE_SERVER_REDIS", "127.0.0.1:6379");
+
+//Service Email-Address Config
+define("SERVICE_EMAIL", 'service@novophp.com');
+define("FEEDBACK_EMAIL", 'feedback@novophp.com');
+
+//upload images config
+define("IMAGES_FILE_MAX_SIZE", 10 * 1024 * 1024);
+define("IMAGES_ALLOW_FILE_TYPE", "jpg,jpeg,gif,png");

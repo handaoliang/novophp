@@ -1,0 +1,10 @@
+*.swp
+*.tpl.cache.php
+*.tpl.php
+tags
+Application/Cache/
+NovoPHP/Configs/CommonConfig.php
+Application/Configs/MemcacheConfig.php
+Application/Configs/MysqlConfig.php
+Application/Configs/RedisConfig.php
+Application/Configs/AppsConfig.php

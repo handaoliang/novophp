@@ -152,8 +152,10 @@ security.limit_extensions = .do .php .php3 .php4 .php5
 - 创建Controller：
 <pre>
 FileName:~/Application/Controllers/HomeController.php
+</pre>
 
-//保持Controller的Class Name与文件名高度一致
+保持Controller的Class Name与文件名高度一致
+<pre>
 class HomeController extends BaseController {
 
     //先映射一个ActionMap。
@@ -186,8 +188,10 @@ class HomeController extends BaseController {
 - 创建Model：
 <pre>
 FileName：~/Application/Models/HomeModels.php
+</pre>
 
-//保持Class Name与文件名高度一致
+保持Class Name与文件名高度一致
+<pre>
 class HomeModels extends BaseMySQLiData{
 
     public function __construct()

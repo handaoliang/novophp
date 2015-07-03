@@ -11,32 +11,26 @@
 /**
  * 通用方法集合。
 **/
-/*
+/**
  * 判断并获取GET数据
  * @param $name:field name;
- * @return 如果存在，则返回GET的数据，否则返回空!
+ * @param $default the default value, default null
+ * @return 如果存在，则返回GET的数据，否则返回默认值!
  */
-function exGet($name)
+function exGet($name, $default = null)
 {
-    if (array_key_exists($name,$_GET)) {
-        return $_GET[$name];
-    } else {
-        return "";
-    }
+    return array_key_exists($name,$_GET) ? $_GET[$name] : $default;
 }
 
 /**
  * 判断并获取POST数据
  * @param $name:field name;
- * @return 如果存在，则返回POST的数据，否则返回空!
+ * @param $default the default value, default null
+ * @return 如果存在，则返回POST的数据，否则返回默认值!
  */
-function exPost($name)
+function exPost($name, $default = null)
 {
-    if (array_key_exists($name,$_POST)) {
-        return $_POST[$name];
-    } else {
-        return "";
-    }
+    return array_key_exists($name,$_POST) ? $_POST[$name] : $default;
 }
 
 /**
@@ -402,7 +396,7 @@ function packageReplaceString($encryptString)
         function($r){
             return str_pad(dechex(ord($r[1])),2,'0',STR_PAD_LEFT);
         },
-        $encryptString 
+        $encryptString
     );
 }
 
@@ -633,7 +627,7 @@ function ipToInt($IPAddress) {
 }
 
 /*
-   check out if the $needle is the start of heystack 
+   check out if the $needle is the start of heystack
 */
 function startsWith($haystack, $needle) {
     $length = strlen($needle);
@@ -641,7 +635,7 @@ function startsWith($haystack, $needle) {
 }
 
 /*
-   check out if the $needle is the end of heystack 
+   check out if the $needle is the end of heystack
 */
 function endsWith($haystack, $needle) {
     $length = strlen($needle);

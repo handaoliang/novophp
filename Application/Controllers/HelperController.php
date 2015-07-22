@@ -1,5 +1,5 @@
 <?php
-require_once dirname(dirname(__FILE__))."/Libs/CaptchaV2.lib.php";
+require_once NOVOPHP_CORE_DIR."/Libs/CaptchaV2.lib.php";
 
 class HelperController extends BaseController {
 

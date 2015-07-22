@@ -294,8 +294,8 @@ class BaseMySQLiData
     }
 
     /**
-     * 过滤执行的SQL，返回转义后的SQL
-     * @param string $sql
+     * 过滤执行入库的数据，连同SpecialHtml一起过滤掉。
+     * @param string
      * @return string
      */
     public function escapeQueryString($string)
@@ -303,6 +303,18 @@ class BaseMySQLiData
         $string = htmlspecialchars($string);
         return mysqli_real_escape_string($this->MySQLDBConn, $string);
     }
+
+
+    /**
+     * 过滤执行入库的数据。
+     * @param string
+     * @return string
+     */
+    public function simpleEscapeQueryString($string)
+    {
+        return mysqli_real_escape_string($this->MySQLDBConn, $string);
+    }
+
 
     /**
      * 关闭数据库连接

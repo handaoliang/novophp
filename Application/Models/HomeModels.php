@@ -26,8 +26,7 @@ class HomeModels extends BaseMySQLiData{
         ) {
             die("Memcache Config files Error...Please Check...");
         }
-        $memcacheServer = $memcacheConfig["memcache_server"];
-        $this->memcacheObj = new BaseMemcached($memcacheServer, $memcacheConfig["memcache_namespace"]);
+        $this->memcacheObj = new BaseMemcached($memcacheConfig["memcache_server"], $memcacheConfig["memcache_namespace"]);
         if ($this->memcacheObj->checkStatus())
         {   
             $this->memcacheObj->setDataVersion("home");

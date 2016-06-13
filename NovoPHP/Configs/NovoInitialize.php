@@ -17,9 +17,6 @@ session_start();
 /* error reporting */
 error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
 
-/* 关闭set_magic_quotes_runtime */
-@set_magic_quotes_runtime(0);
-
 /* 调整时区 */
 if (version_compare(PHP_VERSION, '5.1.0', '>='))
 {
@@ -58,7 +55,10 @@ require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BaseMySQLiData.class.php";
 require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BaseStringEncrypt.class.php";
 /* 基础分页类 */
 require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BasePage.class.php";
-//Memcached操作类
+/* Memcached操作类 */
 require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BaseMemcached.class.php";
 /* 基础上传类 */
 require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BaseUploader.class.php";
+/* 基础CURL类 */
+require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BaseCurls.Class.php";
+

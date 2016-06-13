@@ -13,27 +13,30 @@
  **/
 class BaseMemcached
 {
-    private $MemcacheConn = null;
+    private $MemcachedConn = null;
     private $NameSpace = null;
     private $DataVersion = 1;
 
     public function __construct($MemcacheServer, $NameSpace)
     {
-        if(!class_exists('Memcache')){
-            $this->MemcacheConn = false;
+        if(!class_exists('Memcached')){
+            $this->MemcachedConn = false;
             return;
         }
 
-        $this->MemcacheConn = new Memcache();
+        $this->MemcachedConn = new Memcached();
 
         if(count($MemcacheServer) > 1)
         {
+            $MemcacheServerArr = array();
+
             foreach($MemcacheServer as $value)
             {
-                $this->MemcacheConn->addServer($value['host'], $value['port'], $value['weight']);
+                array_push($MemcacheServerArr, array_values($value));
             }
+            $this->MemcachedConn->addServers($MemcacheServerArr);
         } else {
-            $this->MemcacheConn->addServer($MemcacheServer[0]['host'],$MemcacheServer[0]['port'], $MemcacheServer[0]['weight']);
+            $this->MemcachedConn->addServer($MemcacheServer[0]['host'],$MemcacheServer[0]['port'], $MemcacheServer[0]['weight']);
         }
         $this->NameSpace = $NameSpace;
         //默认一个版本，各业务模块可以在生成对象后执行setDataVersion覆盖
@@ -45,7 +48,7 @@ class BaseMemcached
      * @return bool true成功，false 失败
      */
     public function checkStatus(){
-        $memStatus = $this->MemcacheConn->getStats();
+        $memStatus = $this->MemcachedConn->getStats();
         if(empty($memStatus)){
             return false;
         }else{
@@ -62,16 +65,17 @@ class BaseMemcached
      */
     public function setCache($key, $value, $expire=3600, $compress=false)
     {
-        if(!$this->MemcacheConn){
+        if(!$this->MemcachedConn){
             return;
         }
         $key = md5($key);
-        $data = $this->MemcacheConn->get($key);
+        $data = $this->MemcachedConn->get($key);
         if(empty($data)){
             if($compress){
-                return $this->MemcacheConn->set($this->NameSpace.'_'.$this->DataVersion.'_'.$key, $value, MEMCACHE_COMPRESSED, $expire);
+                $this->MemcachedConn->setOption(Memcached::OPT_COMPRESSION, true);
+                return $this->MemcachedConn->set($this->NameSpace.'_'.$this->DataVersion.'_'.$key, $value, $expire);
             }else{
-                return $this->MemcacheConn->set($this->NameSpace.'_'.$this->DataVersion.'_'.$key, $value, 0, $expire);
+                return $this->MemcachedConn->set($this->NameSpace.'_'.$this->DataVersion.'_'.$key, $value,  $expire);
             }
         }
     }
@@ -83,58 +87,58 @@ class BaseMemcached
      */
     public function getCache($key)
     {
-        if(!$this->MemcacheConn){
+        if(!$this->MemcachedConn){
             return;
         }
 
         $key = md5($key);
-        return $this->MemcacheConn->get($this->NameSpace.'_'.$this->DataVersion.'_'.$key);
+        return $this->MemcachedConn->get($this->NameSpace.'_'.$this->DataVersion.'_'.$key);
     }
 
 
     /***
-     * 获取缓存
+     * 删除缓存
      * @param $key key值
      * @reutrn 缓存数据
      */
     public function deleteCache($key)
     {
-        if(!$this->MemcacheConn){
+        if(!$this->MemcachedConn){
             return;
         }
         $key = md5($key);
-        return $this->MemcacheConn->delete($this->NameSpace.'_'.$this->DataVersion.'_'.$key);
+        return $this->MemcachedConn->delete($this->NameSpace.'_'.$this->DataVersion.'_'.$key);
     }
 
 
     /***
-     * 增加值
+     * 将一个数值元素增加参数offset指定的大小
      * @param $key key值
      * @param $value value值
      * @reutrn 缓存数据
      */
-    public function incrementCache($key, $value=1)
+    public function incrementCache($key, $offset=1)
     {
-        if(!$this->MemcacheConn){
+        if(!$this->MemcachedConn){
             return;
         }
         $key = md5($key);
-        return $this->MemcacheConn->increment($this->NameSpace.'_'.$this->DataVersion.'_'.$key, $value);
+        return $this->MemcachedConn->increment($this->NameSpace.'_'.$this->DataVersion.'_'.$key, $offset);
     }
 
     /**
-     * 减少值
+     * 减小一个数值元素的值，减小多少由参数offset决定
      * @param $key key值
      * @param $value value值
      * @reutrn 缓存数据
      */
-    public function decrementCache($key, $value=1)
+    public function decrementCache($key, $offset=1)
     {
-        if(!$this->MemcacheConn){
+        if(!$this->MemcachedConn){
             return;
         }
         $key = md5($key);
-        return $this->MemcacheConn->decrement($this->NameSpace.'_'.$this->DataVersion.'_'.$key, $value);
+        return $this->MemcachedConn->decrement($this->NameSpace.'_'.$this->DataVersion.'_'.$key, $offset);
     }
 
 
@@ -144,7 +148,7 @@ class BaseMemcached
      */
     public function flushCache($ModuleName = "")
     {
-        if(!$this->MemcacheConn){
+        if(!$this->MemcachedConn){
             return;
         }
         $version_key = 'version_'.$this->NameSpace;
@@ -152,7 +156,7 @@ class BaseMemcached
         {
             $version_key .= '_'.$ModuleName;
         }
-        $this->MemcacheConn->increment($version_key, 1);
+        $this->MemcachedConn->increment($version_key, 1);
     }
 
     /***
@@ -167,10 +171,10 @@ class BaseMemcached
             $version_key .= '_'.$ModuleName;
         }
 
-        $this->DataVersion = $this->MemcacheConn->get($version_key);
+        $this->DataVersion = $this->MemcachedConn->get($version_key);
         if (empty($this->DataVersion))
         {
-            $this->MemcacheConn->set($version_key, 1);
+            $this->MemcachedConn->set($version_key, 1);
             $this->DataVersion = 1;
         }
     }

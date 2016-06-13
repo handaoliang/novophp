@@ -123,7 +123,7 @@ class BaseMySQLiData
         if(is_bool($queryResult)){
             return $returnData;
         }else{
-            if($result = mysqli_fetch_array($queryResult, MYSQL_ASSOC)){
+            if($result = mysqli_fetch_array($queryResult, MYSQLI_ASSOC)){
                 $returnData = $result;
             }
         }
@@ -334,7 +334,7 @@ class BaseMySQLiData
     private function _FetchAll($result)
     {
         $returnData = array();
-        while($row = mysqli_fetch_array($result, MYSQL_ASSOC)) {
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
             $returnData[] = $this->_StripslashesDeep($row);
         }
         return $returnData;

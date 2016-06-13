@@ -10,6 +10,7 @@
 **/
 /**
  * 通用Memcached类。
+ * 基于PHP的memcached扩展，当前版本2.0.2，需要编译。
  **/
 class BaseMemcached
 {

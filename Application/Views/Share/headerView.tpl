@@ -11,8 +11,8 @@
     <meta http-equiv="pragma" content="no-cache" />
     <meta name="robots" content="index,follow" />
     <meta name="Author" content="Comnovo Inc." />
-    <meta name="Keywords" content="comnovo.com" />
-    <meta name="Description" content="comnovo.com website" />
+    <meta name="Keywords" content="novophp.com" />
+    <meta name="Description" content="novophp.com website" />
 
     <link rel="stylesheet" type="text/css" href="{{$res}}/css/global.css" />
 

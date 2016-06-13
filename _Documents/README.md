@@ -136,7 +136,7 @@
         error_page  404              /error/404.html;
         error_page   500 502 503 504  /index.do;
 
-        access_log /opt/idata/www_comnovo_com_access.log access_log_format;
+        access_log /opt/idata/www_novophp_com_access.log access_log_format;
     }
 </pre>
 
@@ -149,8 +149,7 @@ security.limit_extensions = .do .php .php3 .php4 .php5
 
 ### 五、进阶教程：
 
-创建Controller：
--
+- 创建Controller：
 <pre>
 FileName:~/Application/Controllers/HomeController.php
 </pre>
@@ -186,9 +185,7 @@ class HomeController extends BaseController {
 </pre>
 
 
-创建Model：
--
-
+- 创建Model：
 <pre>
 FileName：~/Application/Models/HomeModels.php
 </pre>
@@ -218,7 +215,7 @@ class HomeModels extends BaseMySQLiData{
         $this->memcacheObj = new BaseMemcached($memcacheServer, $memcacheConfig["memcache_namespace"]);
         if ($this->memcacheObj->checkStatus())
         {
-            $this->memcacheObj->setDataVersion("home");
+            $this->memcacheObj->setDataVersion("home_index");
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 /* vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker: */
 /**
- * @Project             www.comnovo.com
+ * @Project             www.novophp.com
  * @file                $RCSfile: ErrorController.php,v $
  * @version             $Revision: 1.0 $
  * @modifiedby          $Author: handaoliang $

@@ -126,9 +126,9 @@ function getTimestamp($date)
 /**
  * 当用Nginx作为代理服务器时取真实IP的方法
  * 注意：如果前端配置以Nginx作为服务器负载均衡，那么，Nginx的配置中要带上proxy_set_header：
-    upstream www_comnovo_com{
+    upstream www_novophp_com{
         #server  127.0.0.1:8299;
-        server unix:/www/comnovo.sock fail_timeout=0;
+        server unix:/www/novophp.sock fail_timeout=0;
 
         proxy_set_header    Host            $host;
         proxy_set_header    X-Real-IP       $remote_addr;

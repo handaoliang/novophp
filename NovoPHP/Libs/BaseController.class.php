@@ -25,11 +25,6 @@ abstract class BaseController
     {
         //init smarty template object.
         $this->smarty = new SmartyTemplate;
-        $this->smarty->assign("charset",SYSTEM_CHARSET);
-        $this->smarty->assign("lang",SYSTEM_LANG);
-        $this->smarty->assign("web",WEB_ROOT_PATH);
-        $this->smarty->assign("res",RES_ROOT_PATH);
-        $this->smarty->assign("files",FILES_PATH);
     }
 
     public function setClassName($className)

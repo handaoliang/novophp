@@ -31,4 +31,10 @@ if(file_exists(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."Configs".DIRECTOR
 require_once dirname(dirname(dirname(__FILE__))).DIRECTORY_SEPARATOR."NovoPHP".DIRECTORY_SEPARATOR."Configs".DIRECTORY_SEPARATOR."NovoInitialize.php";
 
 /* 应用本身公共函数库 */
-require_once APPS_LIBS_DIR.DIRECTORY_SEPARATOR."Apps.Common.func.php";
+require_once APPS_LIBS_DIR.DIRECTORY_SEPARATOR."AppsCommon.func.php";
+
+/* URI操作相关的类 */
+require_once APPS_LIBS_DIR.DIRECTORY_SEPARATOR."NovoURI.class.php";
+
+/* 应用的基础类本身 */
+require_once APPS_LIBS_DIR.DIRECTORY_SEPARATOR."AppsBaseController.class.php";

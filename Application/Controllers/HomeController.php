@@ -1,5 +1,8 @@
 <?php
-class HomeController extends BaseController {
+class HomeController extends AppsBaseController {
+
+    //页面需要身份验证才能进行操作。
+    //public $isAuthRequire = true;
 
     protected $ActionsMap = array(
         "index"         =>"doIndex",

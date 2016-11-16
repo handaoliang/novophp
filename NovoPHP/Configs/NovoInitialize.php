@@ -61,4 +61,5 @@ require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BaseMemcached.class.php";
 require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BaseUploader.class.php";
 /* 基础CURL类 */
 require_once NOVOPHP_LIBS_DIR.DIRECTORY_SEPARATOR."BaseCurls.Class.php";
-
+/* Email验证类 */
+require_once NOVOPHP_VENDORS_DIR.DIRECTORY_SEPARATOR."EmailAddressValidator.php";

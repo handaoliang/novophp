@@ -6,7 +6,7 @@
 
 - PHP要求5.3以上版本，保证`Nginx`的`Rewrite`模块已经编译，Linux系统保证开启epoll，FreeBSD保证开启了kqueue支持。
 
-- 框架采用MVC架构，整合了PHP优秀的模板系统Smarty，数据缓存放到Memcache，文件缓存使用Smarty本身的缓存机制（File或者Memcache）。  
+- 框架采用MVC架构，整合了PHP优秀的模板系统Smarty，数据缓存放到Memcache，文件缓存使用Smarty本身的缓存机制（File或者Memcache）。
 
 - 如果Smarty采取的是File缓存机制，需要保证`Application/Cache`目录下的两个文件夹有写权限。
 
@@ -18,7 +18,7 @@
 
 - 后台任务启用独立进程监听，邮件队列采用PHPResque来支持，使用Superviso来调度（可用Python/Go取代）。
 
-- 在`_Documents`目录下的`novophp_com.conf`文件是网站的`Nginx`配置，更改相应的目录配置之后，通过`nginx.conf` include进去即可。     
+- 在`_Documents`目录下的`novophp_com.conf`文件是网站的`Nginx`配置，更改相应的目录配置之后，通过`nginx.conf` include进去即可。
 
 - 在SVN或者Git的配置里将以下文件忽略：`*.swp` `CommonConfig.php` `WebConfig.php` `MysqlConfig.php` `*.tpl.php` `*.tpl.cache.php`，以免这些文件入库。
 
@@ -46,7 +46,9 @@
 │   ├── Helpers
 │   │   └── UsersHelper.php
 │   ├── Libs
-│   │   └── Apps.Common.func.php
+│   │   ├── AppsBaseController.class.php
+│   │   ├── AppsCommon.func.php
+│   │   └── NovoURI.class.php
 │   ├── Models
 │   │   └── HomeModels.php
 │   ├── UploadRoot
@@ -61,9 +63,6 @@
 │       ├── auto_signin.do
 │       ├── index.do
 │       └── statics
-├── _Documents
-│   ├── novophp_com.conf
-│   └── README.md
 ├── NovoPHP
 │   ├── Configs
 │   │   ├── CommonConfig.php
@@ -91,12 +90,16 @@
 │       ├── Fonts
 │       ├── MailMime
 │       ├── Memory
+│       ├── PHPExcel
 │       ├── PHPMailer
 │       ├── PHPMailerSdk
 │       ├── PHPResque
 │       ├── PHPResque.Multi
 │       └── Smarty
-└── README.md
+├── README.md
+└── _Documents
+    ├── README.md
+    └── nginx.conf
 </pre>
 
 ### 三、Nginx Config 配置：
@@ -106,7 +109,7 @@
     {
         listen       80;
         server_name  www.novophp.com;
-      	
+
       	#将请求定向到index.do，而不是index.php
         index index.html index.do;
         root  /opt/webserver/Application/WebRoot;
@@ -156,7 +159,10 @@ FileName:~/Application/Controllers/HomeController.php
 
 保持Controller的Class Name与文件名高度一致
 <pre>
-class HomeController extends BaseController {
+class HomeController extends AppsBaseController {
+
+    //页面需要身份验证才能进行操作。
+    //public $isAuthRequire = true;
 
     //先映射一个ActionMap。
     protected $ActionsMap = array(
@@ -200,9 +206,9 @@ class HomeModels extends BaseMySQLiData{
         $this->MySQLDBConfig = BaseInitialize::loadAppsConfig('mysql');
         //确定当前Model连接的数据库
         $this->MySQLDBSetting = "master";
-        
+
         parent::__construct();
-        
+
         //创建Memcache连接
         $memcacheConfig = BaseInitialize::loadAppsConfig('memcache');
         if(count($memcacheConfig) == 0
@@ -246,7 +252,7 @@ class HomeModels extends BaseMySQLiData{
 
         $sql = "SELECT * FROM `".$dbTableName."` WHERE {$condition} LIMIT 0,".$num;
         $returnResult = $this->getAll($sql);
-        
+
         //设置Memcache缓存
         if ($cacheStatus)
         {

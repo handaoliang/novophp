@@ -21,8 +21,8 @@ if(!defined("NOVOPHP_CORE_DIR")){//系统所在目录，应该在command.config.
  * 包含基础文件，整站调用。
  */
 //整站全局配置文件
-if(file_exists(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."Configs".DIRECTORY_SEPARATOR."AppsConfig.php")){
-    require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."Configs".DIRECTORY_SEPARATOR."AppsConfig.php";
+if(file_exists(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."Configs".DIRECTORY_SEPARATOR.ENV_CONFIG_FILES_DIR.DIRECTORY_SEPARATOR."AppsConfig.php")){
+    require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."Configs".DIRECTORY_SEPARATOR.ENV_CONFIG_FILES_DIR.DIRECTORY_SEPARATOR."AppsConfig.php";
 }else{
     die("Apps config file not found! please check your configuration.");
 }

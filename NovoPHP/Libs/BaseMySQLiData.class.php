@@ -54,7 +54,7 @@ class BaseMySQLiData
      */
     public function MySQLConn($DBHost, $DBPort, $DBUser, $DBPwd, $DBName, $DBCharset="utf8", $DBDebug=false)
     {
-        $this->MySQLDBConn = mysqli_connect($DBHost, $DBUser, $DBPwd, $DBName, $DBPort);
+        $this->MySQLDBConn = @mysqli_connect($DBHost, $DBUser, $DBPwd, $DBName, $DBPort);
 
         if(!$this->MySQLDBConn){
             die('Can\'t connect MySQL Database : '.mysqli_connect_error().' , Error No:'. mysqli_connect_errno());

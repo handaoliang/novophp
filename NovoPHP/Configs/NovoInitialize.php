@@ -14,8 +14,10 @@
 /* 开启SESSION */
 session_start();
 
-/* error reporting */
-error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+if(version_compare(PHP_VERSION, '5.3.0', '<')){
+	/* 关闭set_magic_quotes_runtime */
+	@set_magic_quotes_runtime(0);
+}
 
 /* 调整时区 */
 if (version_compare(PHP_VERSION, '5.1.0', '>='))

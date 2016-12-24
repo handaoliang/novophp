@@ -16,8 +16,6 @@ class AppsBaseController extends BaseController {
         'data'      =>array(),
     );
 
-    public $table_prefix = MYSQL_TABLE_PREFIX;
-
     public function __construct() {
         $this->userInfo  = $this->getUserInfo();
 

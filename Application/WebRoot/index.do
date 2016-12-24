@@ -16,6 +16,22 @@
  * 对于整个站点而言，可供外界访问到的PHP文件，都必须是.do后缀的。
  *
  **/
+
+$runningEnvironment = isset($_SERVER['NOVO_RUNNING_ENV']) ? $_SERVER['NOVO_RUNNING_ENV'] : 'development';
+
+if($runningEnvironment == "product"){
+    error_reporting(0);
+    ini_set('display_errors', 'Off');
+
+    define("ENV_CONFIG_FILES_DIR", 'Product');
+}else{
+    error_reporting(-1);
+    //error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+    ini_set('display_errors', 'On');
+
+    define("ENV_CONFIG_FILES_DIR", 'Development');
+}
+
 //网站站入口文件
 require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."Configs".DIRECTORY_SEPARATOR."AppsInitialize.php";
 //print_r($_GET);exit;

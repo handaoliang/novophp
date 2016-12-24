@@ -30,19 +30,31 @@
 <pre>
 .
 ├── Application
+│   ├── Cache
+│   │   ├── smarty_cache
+│   │   └── templates_c
 │   ├── Configs
-│   │   ├── AppsConfig.php
 │   │   ├── AppsInitialize.php
-│   │   ├── MemcacheConfig.php
-│   │   ├── MysqlConfig.php
-│   │   └── RedisConfig.php
+│   │   ├── Development
+│   │   │   ├── AppsConfig.php
+│   │   │   ├── MemcacheConfig.php
+│   │   │   ├── MysqlConfig.php
+│   │   │   └── RedisConfig.php
+│   │   └── Product
 │   ├── Controllers
 │   │   ├── ErrorController.php
 │   │   ├── HelperController.php
 │   │   └── HomeController.php
 │   ├── Daemons
 │   │   ├── Scripts
+│   │   │   ├── Common.conf
+│   │   │   ├── _PHPResque_Email
+│   │   │   └── confs
 │   │   └── ServerJobs
+│   │       ├── ResetPasswordEmail_Job.php
+│   │       ├── Resque.init.php
+│   │       ├── Views
+│   │       └── WebAccountsActiveEmail_Job.php
 │   ├── Helpers
 │   │   └── UsersHelper.php
 │   ├── Libs
@@ -54,15 +66,26 @@
 │   ├── UploadRoot
 │   │   ├── crossdomain.xml
 │   │   ├── statics
+│   │   │   └── asset
 │   │   └── upload.do
 │   ├── Views
 │   │   ├── Error
+│   │   │   ├── 404ErrorView.tpl
+│   │   │   ├── errorMessageView.tpl
+│   │   │   └── permissionErrorView.tpl
 │   │   ├── Home
+│   │   │   └── indexView.tpl
 │   │   └── Share
+│   │       ├── dateTimeSelector.tpl
+│   │       ├── footerView.tpl
+│   │       └── headerView.tpl
 │   └── WebRoot
 │       ├── auto_signin.do
 │       ├── index.do
 │       └── statics
+│           ├── css
+│           ├── images
+│           └── js
 ├── NovoPHP
 │   ├── Configs
 │   │   ├── CommonConfig.php
@@ -98,7 +121,6 @@
 │       └── Smarty
 ├── README.md
 └── _Documents
-    ├── README.md
     └── nginx.conf
 </pre>
 
@@ -110,9 +132,8 @@
         listen       80;
         server_name  www.novophp.com;
 
-      	#将请求定向到index.do，而不是index.php
         index index.html index.do;
-        root  /opt/webserver/Application/WebRoot;
+		root  /WebServer/Application/WebRoot;
 
         #禁止访问.php|.tpl的文件，返回404
         location ~ .*\.(php|tpl)?$ {
@@ -131,6 +152,9 @@
 
         location ~ .*\.(php|do)?$
         {
+            #fastcgi_param NOVO_RUNNING_ENV 'product';
+            fastcgi_param NOVO_RUNNING_ENV 'development';
+
             fastcgi_pass  127.0.0.1:9000;
             fastcgi_index index.do;
             include fcgi.conf;
@@ -139,7 +163,7 @@
         error_page  404              /error/404.html;
         error_page   500 502 503 504  /index.do;
 
-        access_log /opt/idata/www_novophp_com_access.log access_log_format;
+        access_log /data/logs/www_novophp_com_access.log access_log_format;
     }
 </pre>
 

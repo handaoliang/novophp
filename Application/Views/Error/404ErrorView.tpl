@@ -1,6 +1,7 @@
 {{include file="Share/headerView.tpl"}}
-    <title>Comnovo.com - NovoPHP - Error</title>
+    <title>访问的页面不存在 - 404 Error - NovoPHP.com</title>
     <style type="text/css">
+        body{ padding-top:0px; background:#DAD8D9; background-color:#DAD8D9; background-image:none; }
         #error_404_container {
             width:700px; height:550px; overflow:hidden; margin:auto;
             background:url({{$res}}/images/error_404_bg.jpg) no-repeat 0 0;
@@ -25,7 +26,7 @@
     </script>
 
 </head>
-<body style="padding-top:0px;background-color:#DAD8D9;">
+<body>
 <div id="error_404_container">
     <div class="e_title"></div>
     <div class="e_con">

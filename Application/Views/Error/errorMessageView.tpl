@@ -1,6 +1,7 @@
 {{include file="Share/headerView.tpl"}}
-    <title>Comnovo.com - NovoPHP - Error</title>
+    <title>访问出错 - NovoPHP.com - Error</title>
     <style type="text/css">
+        body{ padding-top:0px; background:#DAD8D9; background-color:#DAD8D9; background-image:none; }
         #error_404_container {
             width:700px; height:550px; overflow:hidden; margin:auto;
             background:url({{$res}}/images/web_error_bg.jpg) no-repeat 0 0;
@@ -34,10 +35,10 @@
     </script>
 
 </head>
-<body style="padding-top:0px;background-color:#DAD8D9;">
+<body>
 <div id="error_404_container">
-    <div class="e_title">{{$error_msg}}</div>
-    {{if $redirect_info}}
+    <div class="e_title">{{if isset($error_msg)}}{{$error_msg}}{{else}}对不起，访问出错！{{/if}}</div>
+    {{if isset($redirect_info)}}
     <div class="e_con">
         系统将于&nbsp;<span id="rd_time">8</span>&nbsp;秒钟后自动跳转到&nbsp;{{$redirect_info.name}}，或&nbsp;<a href="{{$redirect_info.uri}}">点击这里直接跳转»</a>
     </div>
@@ -49,7 +50,7 @@
 </div>
 <script type="text/javascript">
 var redirect_time = 8;
-{{if $redirect_info}}
+{{if isset($redirect_info)}}
 windowRedirect(redirect_time, '{{$redirect_info.uri}}', 'rd_time');
 {{else}}
 windowRedirect(redirect_time, "", 'rd_time');

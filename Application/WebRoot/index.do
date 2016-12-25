@@ -17,19 +17,34 @@
  *
  **/
 
-$runningEnvironment = isset($_SERVER['NOVO_RUNNING_ENV']) ? $_SERVER['NOVO_RUNNING_ENV'] : 'development';
+define('ENVIRONMENT', isset($_SERVER['NOVO_RUNNING_ENV']) ? $_SERVER['NOVO_RUNNING_ENV'] : 'development');
 
-if($runningEnvironment == "product"){
-    error_reporting(0);
-    ini_set('display_errors', 'Off');
+switch (ENVIRONMENT)
+{
+    case 'development':
+        error_reporting(-1);
+        //error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+        ini_set('display_errors', 1);
+        define("ENV_CONFIG_FILES_DIR", 'Development');
+        break;
 
-    define("ENV_CONFIG_FILES_DIR", 'Product');
-}else{
-    error_reporting(-1);
-    //error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
-    ini_set('display_errors', 'On');
+    case 'testing':
+        break;
+    case 'production':
+        ini_set('display_errors', 0);
+        define("ENV_CONFIG_FILES_DIR", 'Production');
+        if (version_compare(PHP_VERSION, '5.3', '>='))
+        {
+            error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
+        } else {
+            error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
+        }
+        break;
 
-    define("ENV_CONFIG_FILES_DIR", 'Development');
+    default:
+        header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
+        echo 'The application environment is not set correctly.';
+        exit(1);
 }
 
 //网站站入口文件

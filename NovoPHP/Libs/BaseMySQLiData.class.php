@@ -14,11 +14,12 @@
  **/
 class BaseMySQLiData
 {
-    protected $MySQLDBConn = NULL;
-    protected $MySQLDBConfig = "";
+    protected $MySQLDBConn    = NULL;
+    protected $MySQLDBConfig  = "";
     protected $MySQLDBSetting = "master";
+
     public $DBTablePre = "";
-    public $DBDebug = false;
+    public $DBDebug    = false;
 
     /**
      * 构造函数
@@ -412,6 +413,4 @@ class BaseMySQLiData
         $value = $q.$value.$q;
         return $value;
     }
-
-
 }

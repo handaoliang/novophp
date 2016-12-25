@@ -15,7 +15,7 @@ class BaseStringEncrypt
 {
     protected static $strsArray;
     protected static $baseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.";
-    protected static $baseKey ="d@2#6^w&KoB*_sY0^=-LG_L+n#I%@G9n+_i=y*G@~UiFs_h.Zh@L!Oapl^@SnA";
+    protected static $baseKey   = "d@2#6^w&KoB*_sY0^=-LG_L+n#I%@G9n+_i=y*G@~UiFs_h.Zh@L!Oapl^@SnA";
 
     public static function disorganizeString($normalString)
     {

@@ -18,9 +18,9 @@
 
 - 后台任务启用独立进程监听，邮件队列采用PHPResque来支持，使用Superviso来调度（可用Python/Go取代）。
 
-- 在`_Documents`目录下的`novophp_com.conf`文件是网站的`Nginx`配置，更改相应的目录配置之后，通过`nginx.conf` include进去即可。
+- 在`_Documents`目录下的`nginx.conf`文件是网站的`Nginx`配置，更改相应的目录配置之后，通过`nginx.conf` include进去即可。
 
-- 在SVN或者Git的配置里将以下文件忽略：`*.swp` `CommonConfig.php` `WebConfig.php` `MysqlConfig.php` `*.tpl.php` `*.tpl.cache.php`，以免这些文件入库。
+- 在SVN或者Git的配置里将以下文件忽略：`*.swp` `*.tpl.php` `*.tpl.cache.php`，以免这些文件入库。
 
 - 保证PHP的Memcache/MySQL/Redis/GMP/GD等第三方模块已经编译或者内置。
 

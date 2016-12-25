@@ -9,11 +9,11 @@
  * @copyright            Copyright (c) 2013, Comnovo Inc.
 **/
 /**
- * 自建smarty类，用于模板应用接口。当前应用的smarty版本是：Smarty 3.1.13 Released Jan 15th, 2013
+ * 自建smarty类，用于模板应用接口。
  * 随时升级smarty版本，以免因smarty而产生系统漏洞。
  * 此自定义smarty类里面，把smarty语法从{}改成了用{{}}引用，
  * 因此，如果在VIM中使用smarty语法高亮，需要修改:$VIM_PATH/share/syntax/smarty.vim。
- * 并将{}改成{{}}。注：在VIM中，倘模板文件的后缀为.tpl，则会自适应smarty语法高亮。
+ * 注：在VIM中，倘模板文件的后缀为.tpl，则会自适应smarty语法高亮。
 **/
 
 if(!defined('NOVOPHP_VENDORS_DIR')){

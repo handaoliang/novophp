@@ -16,31 +16,30 @@
  * 对于整个站点而言，可供外界访问到的PHP文件，都必须是.do后缀的。
  *
  **/
-
-define('ENVIRONMENT', isset($_SERVER['NOVO_RUNNING_ENV']) ? $_SERVER['NOVO_RUNNING_ENV'] : 'development');
+define('ENVIRONMENT', isset($_SERVER['NOVO_RUNNING_ENV']) ? $_SERVER['NOVO_RUNNING_ENV'] : 'production');
 
 switch (ENVIRONMENT)
 {
+    //开发环境
     case 'development':
         error_reporting(-1);
-        //error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
         ini_set('display_errors', 1);
-        define("ENV_CONFIG_FILES_DIR", 'Development');
         break;
-
+    //测试环境
     case 'testing':
+        error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+        ini_set('display_errors', 1);
         break;
+    //仿真环境
+    case 'emulation':
+        error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
+        ini_set('display_errors', 1);
+        break;
+    //生产环境
     case 'production':
+        error_reporting(0);
         ini_set('display_errors', 0);
-        define("ENV_CONFIG_FILES_DIR", 'Production');
-        if (version_compare(PHP_VERSION, '5.3', '>='))
-        {
-            error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-        } else {
-            error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
-        }
         break;
-
     default:
         header('HTTP/1.1 503 Service Unavailable.', TRUE, 503);
         echo 'The application environment is not set correctly.';

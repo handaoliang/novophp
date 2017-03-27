@@ -20,6 +20,7 @@ abstract class BaseController
     protected $className;
     protected $smarty;
     protected $requestDataType;
+    protected $paramsArray;
 
     public function __construct()
     {
@@ -49,7 +50,7 @@ abstract class BaseController
 
     public function setActionsName($actionsName)
     {
-        $this->actionsName= $actionsName;
+        $this->actionsName = $actionsName;
     }
 
     public function getActionsName()
@@ -59,13 +60,19 @@ abstract class BaseController
 
     public function setRequestDataType($requestDataType)
     {
-        $this->requestDataType= $requestDataType;
+        $this->requestDataType = $requestDataType;
     }
 
     public function getRequestDataType()
     {
         return $this->requestDataType;
     }
+
+    public function setParams($paramsArr)
+    {
+        $this->paramsArray = $paramsArr;
+    }
+
 
     public function getHelperByName($name)
     {
@@ -116,7 +123,14 @@ abstract class BaseController
                 exit;
             }
             $actionMethod = $this->ActionsMap[$this->actionsName];
-            $this->$actionMethod();
+            call_user_func_array(array($this, $actionMethod), $this->paramsArray);
+            /*
+            if(!empty($this->paramsString)){
+                $this->$actionMethod($this->paramsString);
+            }else{
+                $this->$actionMethod();
+            }
+             */
         }else{
             //no need write log, because this mistake may initiate by programer.
             $this->smarty->assign("error_msg", $this->className." Error: Urls map was undefined.");

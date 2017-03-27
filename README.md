@@ -141,14 +141,14 @@
         }
 
         #对根目录的访问都做URLRewrite跳转。
-        if (!-f $request_filename) {
-            rewrite ^/auto_signin(.*)$ /auto_signin.do?controller=users&action=auto_sign_in&referer_uri=$1 last;
-            rewrite ^/([\-_a-zA-Z]+)/?$ /index.do?controller=$1&action=index last;
-            rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)/(.*)\.(html|txt|json|shtml)?$ /index.do?controller=$1&action=$2&id=$3&request_data_type=$4 last;
-            rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)\.(html|txt|json|shtml)?$ /index.do?controller=$1&action=$2&request_data_type=$3 last;
-            rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)/?(.*)$ /index.do?controller=$1&action=$2&$3 last;
-            break;
-        }
+        #if (!-f $request_filename) {
+        #    rewrite ^/auto_signin(.*)$ /auto_signin.do?controller=users&action=auto_sign_in&referer_uri=$1 last;
+        #    rewrite ^/([\-_a-zA-Z]+)/?$ /index.do?controller=$1&action=index last;
+        #    rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)/(.*)\.(html|txt|json|shtml)?$ /index.do?controller=$1&action=$2&id=$3&request_data_type=$4 last;
+        #    rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)\.(html|txt|json|shtml)?$ /index.do?controller=$1&action=$2&request_data_type=$3 last;
+        #    rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)/?(.*)$ /index.do?controller=$1&action=$2&$3 last;
+        #    break;
+        #}
 
         location ~ .*\.(php|do)?$
         {
@@ -160,8 +160,8 @@
             include fcgi.conf;
         }
 
-        error_page  404              /error/404.html;
-        error_page   500 502 503 504  /index.do;
+        #error_page  404              /error/404.html;
+        error_page   404 500 502 503 504  /index.do;
 
         access_log /data/logs/www_novophp_com_access.log access_log_format;
     }

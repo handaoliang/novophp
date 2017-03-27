@@ -13,7 +13,7 @@ class HomeController extends AppsBaseController {
         parent::__construct();
     }
 
-    public function doIndex(){
+    public function doIndex($name=NULL, $password=NULL){
         if(checkUserSignIn()){
             header("location:/dashboard/");
         }
@@ -21,6 +21,10 @@ class HomeController extends AppsBaseController {
             "frame_name"        =>"NovoPHP",
             "frame_version"     =>"1.0.3",
         );
+        var_dump($name);
+        echo "<br />";
+        var_dump($password);
+        echo "<br />";
         $homeArrayString = simplePackArray($homeArray);
         echo "Pack Array is: " . $homeArrayString . "<br />";
         print_r(simpleUnpackArray($homeArrayString));

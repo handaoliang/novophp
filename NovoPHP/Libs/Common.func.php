@@ -837,3 +837,15 @@ function isURL($url){
 function isMobileNumber($mobileNumber){
     return preg_match('/^((\(\d{3}\))|(\d{3}\-))?13\d{9}$/', $mobileNumber);
 }
+
+/*
+ * 删除URI里的空格
+ * @param string $str;
+ * @return string $str;
+ */
+function trimURIString(&$str) 
+{ 
+    $str = preg_replace('/\s+/u','', trim($str));
+}
+
+

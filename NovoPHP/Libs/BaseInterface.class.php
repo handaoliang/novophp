@@ -13,29 +13,29 @@
 **/
 class BaseInterface {
 
-	public $uri_string = '';
+    public $uri_string = '';
 
 
     public static function initInterface()
     {
-		//phpinfo();exit;
-		$uri = self::_parseRequestURI();
+        //phpinfo();exit;
+        $uri = self::_parseRequestURI();
 
-		if(strpos($uri, ".") !== false){
-			list($uri, $requestDataType) = explode(".", $uri, 2);
+        if(strpos($uri, ".") !== false){
+            list($uri, $requestDataType) = explode(".", $uri, 2);
             trimURIString($requestDataType);
         }else{
             $requestDataType = "html";
         }
 
-		$segments = array();
-		foreach (explode('/', trim($uri, '/')) as $val)
-		{
-			if ($val !== '')
-			{
-				array_push($segments, $val);
-			}
-		}
+        $segments = array();
+        foreach (explode('/', trim($uri, '/')) as $val)
+        {
+            if ($val !== '')
+            {
+                array_push($segments, $val);
+            }
+        }
         array_walk($segments, "trimURIString");
 
         $tempArr = array();
@@ -123,7 +123,7 @@ class BaseInterface {
         }
 
         return self::_removeRelativeDirectory($uri);
-	}
+    }
 
     protected static function _removeRelativeDirectory($uri)
     {
@@ -139,7 +139,7 @@ class BaseInterface {
         }
 
         $uri_temp_str = implode('/', $uris);
-		return trim(self::_removeInvisibleCharacters($uri_temp_str, FALSE), '/');
+        return trim(self::_removeInvisibleCharacters($uri_temp_str, FALSE), '/');
     }
 
     protected static function _removeInvisibleCharacters($str, $url_encoded = TRUE)

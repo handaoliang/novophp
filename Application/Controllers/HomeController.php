@@ -13,6 +13,7 @@ class HomeController extends AppsBaseController {
         parent::__construct();
     }
 
+    //可以这样访问：http://www.novophp.com/home/index/your_name/your_password.html
     public function doIndex($name=NULL, $password=NULL){
         if(checkUserSignIn()){
             header("location:/dashboard/");

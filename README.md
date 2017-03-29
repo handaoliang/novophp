@@ -103,7 +103,7 @@
         server_name  www.novophp.com;
 
         index index.html index.do;
-		root  /WebServer/Application/WebRoot;
+        root  /webroot/app/webroot;
 
         #禁止访问.php|.tpl的文件，返回404
         location ~ .*\.(php|tpl)?$ {
@@ -145,7 +145,7 @@ security.limit_extensions = .do .php .php3 .php4 .php5
 
 - 创建Controller：
 <pre>
-FileName:~/Application/Controllers/HomeController.php
+FileName:~/app/controller/HomeController.php
 </pre>
 
 保持Controller的Class Name与文件名高度一致
@@ -177,16 +177,16 @@ class HomeController extends AppsController {
             "frame_version"     =>"1.0.5",
         );
         var_dump($name);
-        echo "<br />";
+        echo "\r\n";
         var_dump($password);
-        echo "<br />";
+        echo "\r\n";
         $homeArrayString = CommonFunc::simplePackArray($homeArray);
-        echo "Pack Array is: " . $homeArrayString . "<br />";
+        echo "Pack Array is: " . $homeArrayString . "\r\n";
         print_r(CommonFunc::simpleUnpackArray($homeArrayString));
-        echo "<br />";
+        echo "\r\n";
         $uriStr = CommonFunc::packURIString(12311123);
-        echo $uriStr."<br />";
-        echo CommonFunc::unpackURIString($uriStr)."<br />";
+        echo $uriStr."\r\n";
+        echo CommonFunc::unpackURIString($uriStr)."\r\n";
         $homeModels = $this->getModelByName("home");
         $homeData = $homeModels->getHomeData();
         $this->smarty->assign("home_data", $homeData);

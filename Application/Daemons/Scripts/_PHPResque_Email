@@ -1,4 +1,0 @@
-#!/bin/sh
-cd /opt/www/novophp.com/Daemons/ServerJobs
-#QUEUE=email VERBOSE=True PIDFILE=/tmp/worker_novophp_email.pid /opt/iapps/php/bin/php -f /opt/www/novophp.com/Daemons/ServerJobs/Resque.init.php email > /tmp/worker_novophp_email.log
-QUEUE=email VERBOSE=True PIDFILE=/tmp/worker_novophp_email.pid /opt/iapps/php/bin/php -f /opt/www/novophp.com/Daemons/ServerJobs/Resque.init.php email

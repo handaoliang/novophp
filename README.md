@@ -29,87 +29,28 @@
 ### 二、目录结构：
 <pre>
 .
-├── Application
-│   ├── Cache
-│   │   ├── smarty_cache
-│   │   └── templates_c
-│   ├── Configs
-│   │   ├── AppsInitialize.php
-│   │   ├── Development
-│   │   │   ├── AppsConfig.php
-│   │   │   ├── MemcacheConfig.php
-│   │   │   ├── MysqlConfig.php
-│   │   │   └── RedisConfig.php
-│   │   └── Product
-│   ├── Controllers
-│   │   ├── ErrorController.php
-│   │   ├── HelperController.php
-│   │   └── HomeController.php
-│   ├── Daemons
-│   │   ├── Scripts
-│   │   │   ├── Common.conf
-│   │   │   ├── _PHPResque_Email
-│   │   │   └── confs
-│   │   └── ServerJobs
-│   │       ├── ResetPasswordEmail_Job.php
-│   │       ├── Resque.init.php
-│   │       ├── Views
-│   │       └── WebAccountsActiveEmail_Job.php
-│   ├── Helpers
-│   │   └── UsersHelper.php
-│   ├── Libs
-│   │   ├── AppsBaseController.class.php
-│   │   ├── AppsCommon.func.php
-│   │   └── NovoURI.class.php
-│   ├── Models
-│   │   └── HomeModels.php
-│   ├── UploadRoot
-│   │   ├── crossdomain.xml
-│   │   ├── statics
-│   │   │   └── asset
-│   │   └── upload.do
-│   ├── Views
-│   │   ├── Error
-│   │   │   ├── 404ErrorView.tpl
-│   │   │   ├── errorMessageView.tpl
-│   │   │   └── permissionErrorView.tpl
-│   │   ├── Home
-│   │   │   └── indexView.tpl
-│   │   └── Share
-│   │       ├── dateTimeSelector.tpl
-│   │       ├── footerView.tpl
-│   │       └── headerView.tpl
-│   └── WebRoot
-│       ├── auto_signin.do
-│       ├── index.do
-│       └── statics
-│           ├── css
-│           ├── images
-│           └── js
 ├── NovoPHP
-│   ├── Configs
-│   │   ├── CommonConfig.php
-│   │   └── NovoInitialize.php
-│   ├── Libs
-│   │   ├── BaseController.class.php
-│   │   ├── BaseCurls.Class.php
-│   │   ├── BaseEmailServerJobs.Class.php
-│   │   ├── BaseInitialize.class.php
-│   │   ├── BaseInterface.class.php
-│   │   ├── BaseMemcached.class.php
-│   │   ├── BaseMySQLiData.class.php
-│   │   ├── BasePage.class.php
-│   │   ├── BaseRedis.class.php
-│   │   ├── BaseStringEncrypt.class.php
-│   │   ├── BaseUploader.class.php
-│   │   ├── CaptchaV2.lib.php
-│   │   ├── Common.func.php
-│   │   ├── Helper.func.php
-│   │   ├── SmartyTemplate.class.php
-│   │   └── XXTeaEncryptModel.func.php
-│   └── Vendors
+│   ├── core
+│   │   ├── NovoController.class.php
+│   │   ├── NovoInitialize.php
+│   │   ├── NovoInterface.class.php
+│   │   └── NovoLoader.class.php
+│   ├── lib
+│   │   ├── CommonFunc.class.php
+│   │   ├── EmailAddressValidator.class.php
+│   │   ├── HelperFunc.class.php
+│   │   ├── NovoCaptcha.class.php
+│   │   ├── NovoCurls.class.php
+│   │   ├── NovoEmailServerJobs.class.php
+│   │   ├── NovoMemcached.class.php
+│   │   ├── NovoMySQLiData.class.php
+│   │   ├── NovoPage.class.php
+│   │   ├── NovoRedis.class.php
+│   │   ├── NovoSmarty.class.php
+│   │   ├── NovoStringEncrypt.class.php
+│   │   └── NovoUploader.class.php
+│   └── vendor
 │       ├── Asido
-│       ├── EmailAddressValidator.php
 │       ├── Fonts
 │       ├── MailMime
 │       ├── Memory
@@ -120,8 +61,37 @@
 │       ├── PHPResque.Multi
 │       └── Smarty
 ├── README.md
-└── _Documents
-    └── nginx.conf
+├── _Documents
+│   └── nginx.conf
+├── app
+│   ├── cache
+│   │   ├── smarty_cache
+│   │   └── templates_c
+│   ├── controller
+│   │   ├── ErrorController.php
+│   │   ├── HelperController.php
+│   │   └── HomeController.php
+│   ├── lib
+│   │   ├── AppsController.class.php
+│   │   ├── AppsFunc.class.php
+│   │   └── app.init.php
+│   ├── view
+│   │   ├── Error
+│   │   ├── Home
+│   │   └── Share
+│   └── webroot
+│       ├── auto_signin.do
+│       ├── index.do
+│       └── statics
+├── common
+│   ├── api
+│   │   └── HomeApi.class.php
+│   ├── config
+│   │   ├── development
+│   │   └── production
+│   └── model
+│       └── HomeModel.class.php
+└── tt.txt
 </pre>
 
 ### 三、Nginx Config 配置：
@@ -140,19 +110,17 @@
             return 404;
         }
 
-        #对根目录的访问都做URLRewrite跳转。
-        #if (!-f $request_filename) {
-        #    rewrite ^/auto_signin(.*)$ /auto_signin.do?controller=users&action=auto_sign_in&referer_uri=$1 last;
-        #    rewrite ^/([\-_a-zA-Z]+)/?$ /index.do?controller=$1&action=index last;
-        #    rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)/(.*)\.(html|txt|json|shtml)?$ /index.do?controller=$1&action=$2&id=$3&request_data_type=$4 last;
-        #    rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)\.(html|txt|json|shtml)?$ /index.do?controller=$1&action=$2&request_data_type=$3 last;
-        #    rewrite ^/([\-_a-zA-Z]+)/([\-_0-9a-zA-Z]+)/?(.*)$ /index.do?controller=$1&action=$2&$3 last;
-        #    break;
-        #}
+        location / {
+            try_files $uri $uri/ /index.do?$query_string;
+        }
+
+        if (!-f $request_filename) {
+            rewrite (.*) /index.do?$args last;
+        }
 
         location ~ .*\.(php|do)?$
         {
-            #fastcgi_param NOVO_RUNNING_ENV 'product';
+            #fastcgi_param NOVO_RUNNING_ENV 'production';
             fastcgi_param NOVO_RUNNING_ENV 'development';
 
             fastcgi_pass  127.0.0.1:9000;
@@ -160,7 +128,6 @@
             include fcgi.conf;
         }
 
-        #error_page  404              /error/404.html;
         error_page   404 500 502 503 504  /index.do;
 
         access_log /data/logs/www_novophp_com_access.log access_log_format;
@@ -183,7 +150,7 @@ FileName:~/Application/Controllers/HomeController.php
 
 保持Controller的Class Name与文件名高度一致
 <pre>
-class HomeController extends AppsBaseController {
+class HomeController extends AppsController {
 
     //页面需要身份验证才能进行操作。
     //public $isAuthRequire = true;
@@ -200,25 +167,26 @@ class HomeController extends AppsBaseController {
     }
 
     //执行函数体
-    public function doIndex(){
-        if(checkUserSignIn()){
+    //可以这样访问：http://www.novophp.com/home/index/your_name/your_password.html
+    public function doIndex($name=NULL, $password=NULL){
+        if(AppsFunc::checkUserSignIn()){
             header("location:/dashboard/");
         }
         $homeArray = array(
             "frame_name"        =>"NovoPHP",
-            "frame_version"     =>"1.0.3",
+            "frame_version"     =>"1.0.5",
         );
         var_dump($name);
         echo "<br />";
         var_dump($password);
         echo "<br />";
-        $homeArrayString = simplePackArray($homeArray);
+        $homeArrayString = CommonFunc::simplePackArray($homeArray);
         echo "Pack Array is: " . $homeArrayString . "<br />";
-        print_r(simpleUnpackArray($homeArrayString));
+        print_r(CommonFunc::simpleUnpackArray($homeArrayString));
         echo "<br />";
-        $uriStr = packURIString(12311123);
+        $uriStr = CommonFunc::packURIString(12311123);
         echo $uriStr."<br />";
-        echo unpackURIString($uriStr)."<br />";
+        echo CommonFunc::unpackURIString($uriStr)."<br />";
         $homeModels = $this->getModelByName("home");
         $homeData = $homeModels->getHomeData();
         $this->smarty->assign("home_data", $homeData);
@@ -232,73 +200,36 @@ class HomeController extends AppsBaseController {
 
 - 创建Model：
 <pre>
-FileName：~/Application/Models/HomeModels.php
+FileName：~/common/model/HomeModel.class.php
 </pre>
 
 保持Class Name与文件名高度一致
 <pre>
-class HomeModels extends BaseMySQLiData{
+class HomeModel extends NovoMySQLiData
+{
 
     public function __construct()
     {
-        //初始化MySQL数据库配置，
-        $this->MySQLDBConfig = BaseInitialize::loadAppsConfig('mysql');
-        //确定当前Model连接的数据库
+        $this->MySQLDBConfig = NovoLoader::loadAppsConfig('mysql');
         $this->MySQLDBSetting = "master";
-
         parent::__construct();
 
-        //创建Memcache连接
-        $memcacheConfig = BaseInitialize::loadAppsConfig('memcache');
+        $memcacheConfig = NovoLoader::loadAppsConfig('memcache');
         if(count($memcacheConfig) == 0
             || !isset($memcacheConfig["memcache_namespace"])
             || !isset($memcacheConfig["memcache_server"])
         ) {
             die("Memcache Config files Error...Please Check...");
         }
-        $memcacheServer = $memcacheConfig["memcache_server"];
-        $this->memcacheObj = new BaseMemcached($memcacheServer, $memcacheConfig["memcache_namespace"]);
+        $this->memcacheObj = new NovoMemcached($memcacheConfig["memcache_server"], $memcacheConfig["memcache_namespace"]);
         if ($this->memcacheObj->checkStatus())
-        {
-            $this->memcacheObj->setDataVersion("home_index");
-        }
+        {   
+            $this->memcacheObj->setDataVersion("home");
+        }  
     }
 
-    //取数据方法
-    public function getHomeData($category=0, $num=10)
+    public function  getHomeData()
     {
-        //数据库表名
-        $dbTableName = $this->DBTablePre."home";
-        $num = intval($num);
-        $category = intval($category);
-
-        //Memcache缓存Key
-        $cacheKey = "mall_{$category}_{$num}";
-        if ($this->memcacheObj->checkStatus())
-        {
-            $cacheStatus= true;
-            if ($cacheResult = $this->memcacheObj->getCache($cacheKey))
-            {
-                return $cacheResult;
-            }
-        }
-
-        $condition = "`status`=1";
-
-        if($category != 0){
-            $condition .= " AND `category_id`={$category}";
-        }
-
-        $sql = "SELECT * FROM `".$dbTableName."` WHERE {$condition} LIMIT 0,".$num;
-        $returnResult = $this->getAll($sql);
-
-        //设置Memcache缓存
-        if ($cacheStatus)
-        {
-            $this->memcacheObj->setCache($cacheKey, $returnResult);
-        }
-
-        return $returnResult;
+        return "www.novophp.com";
     }
-}
-</pre>
+}</pre>

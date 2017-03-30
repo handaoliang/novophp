@@ -1,13 +1,6 @@
 <?php
 class HelperController extends AppsController {
 
-    protected $ActionsMap = array(
-        "signup_captcha"                =>"doCreateSignupCaptcha",
-        "signin_captcha"                =>"doCreateSigninCaptcha",
-        "forgot_passwd_captcha"         =>"doCreateForgotPasswdCaptcha",
-        "check_captcha"                 =>"doCheckCaptcha",
-    );
-
     protected $returnData = array(
         "error"     =>1,
         "msg"       =>"",
@@ -18,7 +11,7 @@ class HelperController extends AppsController {
         parent::__construct();
     }
 
-    public function doCreateSignupCaptcha()
+    public function do_signup_captcha()
     {
         header("Content-type:image/png");
         $captchaObj = new BaseCaptcha();
@@ -30,7 +23,7 @@ class HelperController extends AppsController {
         $_SESSION['signup_captcha']['time']=microtime();
     }
 
-    public function doCreateSigninCaptcha()
+    public function do_signin_captcha()
     {
         header("Content-type:image/png");
         $captchaObj = new BaseCaptcha();
@@ -43,7 +36,7 @@ class HelperController extends AppsController {
     }
 
 
-    public function doCreateForgotPasswdCaptcha()
+    public function do_forgot_passwd_captcha()
     {
         header("Content-type:image/png");
         $captchaObj = new BaseCaptcha();
@@ -55,7 +48,7 @@ class HelperController extends AppsController {
         $_SESSION['forgot_pwd_captcha']['time']=microtime();
     }
 
-    public function doCheckCaptcha()
+    public function do_check_captcha()
     {
         $userCaptcha = trim(exPost("user_captcha"));
         $userActions = strtolower(trim(exPost("user_actions")));

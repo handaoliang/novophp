@@ -9,20 +9,15 @@
 **/
 class ErrorController extends AppsController {
 
-    protected $ActionsMap = array(
-        "index" =>"doIndex",
-        "404"   =>"do404Error",
-    );
-
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function doIndex(){
+    public function do_index(){
         header("location:/");
     }
-    public function do404Error(){
+    public function do_404(){
         $this->smarty->display("error/404.tpl");
     }
 

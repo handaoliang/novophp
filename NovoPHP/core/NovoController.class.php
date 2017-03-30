@@ -73,7 +73,7 @@ abstract class NovoController
 
     public function getModelByName($name)
     {
-        $modelClassName = ucfirst($name) . "Model";
+        $modelClassName = ucfirst($name)."Model";
         $modelFile = COMMON_MODEL_DIR."/".$modelClassName.".class.php";
         require_once $modelFile;
         return new $modelClassName();
@@ -102,29 +102,17 @@ abstract class NovoController
         $this->smarty->assign("controller", $this->controllerName);
         $this->smarty->assign("actions", $this->actionsName);
 
-        if(property_exists($this, "ActionsMap") && is_array($this->ActionsMap))
-        {
-            if(!array_key_exists($this->actionsName, $this->ActionsMap))
-            {
-                //@todo: need werite a log..
-                $this->smarty->assign("error_msg", "对不起，您所访问的页面没有找到");
-                $this->smarty->display("error/error.tpl");
-                exit;
-            }
-            $actionMethod = $this->ActionsMap[$this->actionsName];
+        $actionMethod = "do_".strtolower($this->actionsName);
+
+        //检查是否存在此方法，如果不存在，显示出错页面。
+        if(method_exists($this, $actionMethod)){
             call_user_func_array(array($this, $actionMethod), $this->paramsArray);
-            /*
-            if(!empty($this->paramsString)){
-                $this->$actionMethod($this->paramsString);
-            }else{
-                $this->$actionMethod();
-            }
-             */
         }else{
-            //no need write log, because this mistake may initiate by programer.
-            $this->smarty->assign("error_msg", $this->className." Error: Urls map was undefined.");
+            //@todo: need werite a log..
+            $this->smarty->assign("error_msg", "对不起，您所访问的页面没有找到");
             $this->smarty->display("error/error.tpl");
             exit;
         }
+
     }
 }

@@ -40,7 +40,7 @@ class HomeController extends AppsController {
         //$this->smarty->assign("home_data", $homeData);
         $this->smarty->assign("test_string", "测试字符串截取啊啊啊啊啊啊");
         $this->smarty->assign("timestamp", time());
-        $this->smarty->display("Home/indexView.tpl");
+        $this->smarty->display("home/index.tpl");
     }
     public function doLogin(){
         echo "This is Login method..";

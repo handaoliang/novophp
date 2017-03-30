@@ -18,21 +18,27 @@ class NovoLoader {
 	 * @param string $configName 要加载的配置
 	 * @param boolean $isReload 强制重新加载。
 	 */
-    public static function loadAppsConfig($configName, $isReload=false)
+    public static function loadAppsConfig($configName, $configVolumeName="", $isReload=false)
     {
         static $novoConfigs = array();
 
         //如果已经存在。
         if(!$isReload && isset($novoConfigs[$configName])){
+            if(!empty($configVolumeName)){
+                return $novoConfigs[$configName][$configVolumeName];
+            }
             return $novoConfigs[$configName];
         }
 
         //取得配置文件路径。
-        $configFilePath = COMMON_CONFIG_DIR.DIRECTORY_SEPARATOR.trim($configName).'.config.php';
+        $configFilePath = COMMON_CONFIG_DIR.DIRECTORY_SEPARATOR.strtolower(trim($configName)).'.config.php';
         if (file_exists($configFilePath)) {
             $novoConfigs[$configName] = include $configFilePath;
         }else{
             die("Initialize Error, File: ".$configFilePath." Not Found, Please Check. ");
+        }
+        if(!empty($configVolumeName)){
+            return $novoConfigs[$configName][$configVolumeName];
         }
         return $novoConfigs[$configName];
     }

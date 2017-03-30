@@ -34,9 +34,11 @@ class HomeController extends AppsController {
         $uriStr = CommonFunc::packURIString(12311123);
         echo $uriStr."<br />";
         echo CommonFunc::unpackURIString($uriStr)."<br />";
-        $homeModels = $this->getModelByName("home");
-        $homeData = $homeModels->getHomeData();
-        $this->smarty->assign("home_data", $homeData);
+        print_r(HomeApi::init(0)->getHomeData())."<br />";
+        //$homeModels = $this->getModelByName("home");
+        //$homeData = $homeModels->getHomeData();
+        //$this->smarty->assign("home_data", $homeData);
+        $this->smarty->assign("test_string", "测试字符串截取啊啊啊啊啊啊");
         $this->smarty->assign("timestamp", time());
         $this->smarty->display("Home/indexView.tpl");
     }

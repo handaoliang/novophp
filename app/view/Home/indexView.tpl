@@ -12,5 +12,6 @@
     Web Root Path: {{$web}}<br />
     Resource Root Path: {{$res}}<br />
     Files Path: {{$files}}<br />
+    String:{{CommonFunc::mbString($test_string,3)}}
 </body>
 </html>

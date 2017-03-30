@@ -852,3 +852,4 @@ class CommonFunc {
     { 
         $str = preg_replace('/\s+/u','', trim($str));
     }
+}

@@ -16,10 +16,9 @@ class NovoMySQLiData
 {
     protected $MySQLDBConn    = NULL;
     protected $MySQLDBConfig  = "";
-    protected $MySQLDBSetting = "master";
+    protected $MySQLQueryDB   = "master";
 
     public $DBTablePre = "";
-    public $DBDebug    = false;
 
     /**
      * 构造函数
@@ -27,24 +26,20 @@ class NovoMySQLiData
      */
     public function __construct()
     {
-        if(!is_array($this->MySQLDBConfig))
+        if(!is_array($this->MySQLDBConfig) || empty($this->MySQLDBConfig))
         {
             die('Can\'t connect MySQL Database : MySQL Database Config Error, Please Check.');
         }
-        if(!isset($this->MySQLDBConfig[$this->MySQLDBSetting]))
-        {
-            $this->MySQLDBSetting = "master";
-        }
-        $this->DBTablePre = $this->MySQLDBConfig[$this->MySQLDBSetting]["db_table_pre"];
-        $this->DBDebug = $this->MySQLDBConfig[$this->MySQLDBSetting]["db_debug"];
+        //print_r($this->MySQLDBConfig);
+
         $this->MySQLConn(
-            $this->MySQLDBConfig[$this->MySQLDBSetting]["db_host"],
-            $this->MySQLDBConfig[$this->MySQLDBSetting]["db_port"],
-            $this->MySQLDBConfig[$this->MySQLDBSetting]["db_user"],
-            $this->MySQLDBConfig[$this->MySQLDBSetting]["db_password"],
-            $this->MySQLDBConfig[$this->MySQLDBSetting]["db_name"],
-            $this->MySQLDBConfig[$this->MySQLDBSetting]["db_charset"],
-            $this->MySQLDBConfig[$this->MySQLDBSetting]["db_debug"]
+            $this->MySQLDBConfig[$this->MySQLQueryDB]["db_host"],
+            $this->MySQLDBConfig[$this->MySQLQueryDB]["db_port"],
+            $this->MySQLDBConfig[$this->MySQLQueryDB]["db_user"],
+            $this->MySQLDBConfig[$this->MySQLQueryDB]["db_password"],
+            $this->MySQLDBConfig[$this->MySQLQueryDB]["db_name"],
+            $this->MySQLDBConfig[$this->MySQLQueryDB]["db_charset"],
+            $this->MySQLDBConfig[$this->MySQLQueryDB]["db_debug"]
         );
     }
 
@@ -360,7 +355,7 @@ class NovoMySQLiData
      */
     private function _StripslashesDeep($value)
     {
-        return is_array($value) ? array_map('reverseEscape', $value) : reverseEscape($value);
+        return is_array($value) ? array_map('self::reverseEscape', $value) : self::reverseEscape($value);
     }
 
     /**
@@ -368,15 +363,12 @@ class NovoMySQLiData
      * @param $str
      * @return string
      **/
-    /*
-    private function reverseEscape($str)
+    private static function reverseEscape($str)
     {
         $search=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
         $replace=array("\\","\0","\n","\r","\x1a","'",'"');
         return str_replace($search,$replace,$str);
     }
-     */
-
 
     /**
      * 对字段两边加反引号，以保证数据库安全

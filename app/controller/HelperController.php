@@ -1,5 +1,5 @@
 <?php
-class HelperController extends BaseController {
+class HelperController extends AppsController {
 
     protected $ActionsMap = array(
         "signup_captcha"                =>"doCreateSignupCaptcha",

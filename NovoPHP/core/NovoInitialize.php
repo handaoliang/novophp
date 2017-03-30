@@ -104,7 +104,7 @@ function NovoAutoload($ClassName)
     global $_AUTO_LOAD_DIR;
     foreach($_AUTO_LOAD_DIR as $_VAL){
         $_AUTO_LOAD_FILE_NAME = $_VAL.DIRECTORY_SEPARATOR.$ClassName.'.class.php';
-        //echo $_AUTO_LOAD_FILE_NAME."<br />";
+        //echo $ClassName."-------".$_AUTO_LOAD_FILE_NAME."<br />";
         if(file_exists($_AUTO_LOAD_FILE_NAME)){
             require_once $_AUTO_LOAD_FILE_NAME;
             return true;

@@ -7,7 +7,7 @@
  * @modifiedby          $Author: handaoliang $
  * @copyright           Copyright (c) 2013, Comnovo Inc.
 **/
-class ErrorController extends BaseController {
+class ErrorController extends AppsController {
 
     protected $ActionsMap = array(
         "index" =>"doIndex",

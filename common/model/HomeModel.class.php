@@ -13,11 +13,15 @@
  **/
 class HomeModel extends NovoMySQLiData
 {
+    protected $AppsDBVolumes = "common_db";
+    protected $AppsQueryDB = "master";
 
     public function __construct()
     {
-        $this->MySQLDBConfig = NovoLoader::loadAppsConfig('mysql');
-        $this->MySQLDBSetting = "master";
+        $this->MySQLDBConfig = NovoLoader::loadAppsConfig('mysql', $this->AppsDBVolumes);
+        $this->DBTablePre = $this->MySQLDBConfig["db_table_pre"];
+        $this->MySQLQueryDB = $this->AppsQueryDB;
+
         parent::__construct();
 
         $memcacheConfig = NovoLoader::loadAppsConfig('memcache');
@@ -36,6 +40,8 @@ class HomeModel extends NovoMySQLiData
 
     public function  getHomeData()
     {
-        return "www.novophp.com";
+        $dbName = $this->DBTablePre."options";
+        $sql = "SELECT * FROM {$dbName} limit 10";
+        return $this->getAll($sql);
     }
 }

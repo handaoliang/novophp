@@ -23,8 +23,6 @@ if(!defined("APPS_BASE_DIR")){
 }
 
 define("APPS_LIB_DIR",        APPS_BASE_DIR.DIRECTORY_SEPARATOR."lib");        //各应用的func及class文件的路径。
-define("APPS_HELPER_DIR",     APPS_BASE_DIR.DIRECTORY_SEPARATOR."helper");     //辅助类目录。
-define("APPS_MODEL_DIR",      APPS_BASE_DIR.DIRECTORY_SEPARATOR."model");      //和数据库打交道的Models文件夹。
 define("APPS_VIEW_DIR",       APPS_BASE_DIR.DIRECTORY_SEPARATOR."view");       //模版文件夹。
 define("APPS_CONTROLLER_DIR", APPS_BASE_DIR.DIRECTORY_SEPARATOR."controller"); //MVC的C层控制文件目录
 define("APPS_WEB_ROOT_DIR",    APPS_BASE_DIR.DIRECTORY_SEPARATOR."webroot");    //网站可访问根目录。
@@ -46,5 +44,3 @@ if(file_exists(COMMON_CONFIG_DIR.DIRECTORY_SEPARATOR."web.config.php")){
 }else{
     die("Apps config file not found! please check your configuration.");
 }
-
-

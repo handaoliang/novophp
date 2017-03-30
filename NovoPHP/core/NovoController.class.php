@@ -108,7 +108,7 @@ abstract class NovoController
             {
                 //@todo: need werite a log..
                 $this->smarty->assign("error_msg", "对不起，您所访问的页面没有找到");
-                $this->smarty->display("Error/errorMessageView.tpl");
+                $this->smarty->display("error/error.tpl");
                 exit;
             }
             $actionMethod = $this->ActionsMap[$this->actionsName];
@@ -123,9 +123,8 @@ abstract class NovoController
         }else{
             //no need write log, because this mistake may initiate by programer.
             $this->smarty->assign("error_msg", $this->className." Error: Urls map was undefined.");
-            $this->smarty->display("Error/errorMessageView.tpl");
+            $this->smarty->display("error/error.tpl");
             exit;
         }
-
     }
 }

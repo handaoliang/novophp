@@ -1,5 +1,5 @@
-{{include file="Share/headerView.tpl"}}
-    <title>Comnovo.com</title>
+{{include file="common/headerView.tpl"}}
+    <title>NovoPHP.com</title>
 </head>
 
 <body>

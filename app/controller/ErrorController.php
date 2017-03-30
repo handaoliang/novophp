@@ -23,7 +23,7 @@ class ErrorController extends AppsController {
         header("location:/");
     }
     public function do404Error(){
-        $this->smarty->display("Error/404ErrorView.tpl");
+        $this->smarty->display("error/404.tpl");
     }
 
 }

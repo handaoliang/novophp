@@ -28,18 +28,18 @@ class NovoSmarty extends Smarty {
      **/
     function __construct() {
         parent::__construct();
-        $this->setTemplateDir(APPS_VIEW_DIR);
+        $this->setTemplateDir(SMARTY_TEMPLATES_DIR);
         $this->setCompileDir(SMARTY_TEMPLATES_C);
         $this->setCacheDir(SMARTY_CACHE_DIR);
         $this->setConfigDir(COMMON_CONFIG_DIR);
 
-        $this->caching_type = SMARTY_CACHING_TYPE;
-        $this->debugging = SMARTY_DEBUGGING;
-        $this->caching = SMARTY_ALLOW_CACHE;
+        $this->caching_type   = SMARTY_CACHING_TYPE;
+        $this->debugging      = SMARTY_DEBUGGING;
+        $this->caching        = SMARTY_ALLOW_CACHE;
         $this->cache_lifetime = SMARTY_CACHE_TIME;
 
-        $this->left_delimiter="{{";
-        $this->right_delimiter="}}";
+        $this->left_delimiter  = "{{";
+        $this->right_delimiter = "}}";
     }
 
     /*

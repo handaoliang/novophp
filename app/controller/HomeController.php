@@ -3,6 +3,13 @@ class HomeController extends AppsController {
 
     //页面需要身份验证才能进行操作。
     //public $isAuthRequire = true;
+    
+    protected $defautJSONData = array(
+        "error"     =>1,
+        "msg"       =>"",
+        "data"      =>"",
+        "code"      =>"",
+    );
 
     public function __construct()
     {
@@ -10,7 +17,8 @@ class HomeController extends AppsController {
     }
 
     //可以这样访问：http://www.novophp.com/home/index/your_name/your_password.html
-    public function do_index($name=NULL, $password=NULL){
+    public function do_index($name=NULL, $password=NULL)
+    {
         if(AppsFunc::checkUserSignIn()){
             header("location:/dashboard/");
         }
@@ -37,8 +45,15 @@ class HomeController extends AppsController {
         $this->smarty->assign("timestamp", time());
         $this->smarty->display("home/index.tpl");
     }
-    public function do_login(){
+    public function do_login()
+    {
         echo "This is Login method..";
+    }
+    
+    public function do_api()
+    {
+
+        CommonFunc::echoJSONData($this->defautJSONData);
     }
 
 }

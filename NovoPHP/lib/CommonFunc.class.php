@@ -852,4 +852,55 @@ class CommonFunc {
     { 
         $str = preg_replace('/\s+/u','', trim($str));
     }
+
+    /*
+     * 切换里的Mimes头。
+     * @param string $str;
+     * @return NULL;
+     */
+    public static function switchMimesHeader($requestDataType)
+    {
+        switch($requestDataType)
+        {
+            case "json":
+                header('Cache-Control: no-cache, must-revalidate');
+                header("Content-Type:application/json; charset=UTF-8");
+                break;
+            case "txt":
+                header("Content-Type:text/plain; charset=UTF-8");
+                break;
+            case "shtml":
+                header("Content-Type:text/html; charset=UTF-8");
+                break;
+            default:
+                header("Content-Type:text/html; charset=UTF-8");
+                break;
+        }
+    }
+
+    /*
+     * 解JSON字符串到Array数组
+     * @param string $str;
+     * @return Array;
+     */
+    public static function decodeJSONString($str)
+    {
+        return json_decode($str, TRUE);
+    }
+
+    /*
+     * 打包并输出JSON字符串
+     * @param string $Array;
+     * @return NULL;
+     */
+    public static function echoJSONData($array)
+    {
+        $jsonString = json_encode($array, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        if(!$jsonString){
+            echo "Generate JSON Failed - Illegal key, value pair.";
+            exit;
+        }
+        self::switchMimesHeader("json");
+        echo $jsonString;
+    }
 }

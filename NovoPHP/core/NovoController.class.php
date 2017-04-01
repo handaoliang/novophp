@@ -81,6 +81,7 @@ abstract class NovoController
 
     public function dispatchAction()
     {
+        /*
         switch($this->requestDataType)
         {
             case "json":
@@ -97,6 +98,7 @@ abstract class NovoController
                 header("Content-Type:text/html; charset=UTF-8");
                 break;
         }
+         */
 
         //执行模板呈现之前，将Controller和Actions的名字先预设上，模板可能要调用。
         $this->smarty->assign("controller", $this->controllerName);

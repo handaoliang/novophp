@@ -27,7 +27,3 @@ define("RESQUE_SERVER_REDIS", "127.0.0.1:6379");
 //Service Email-Address Config
 define("SERVICE_EMAIL",  'service@novophp.com');
 define("FEEDBACK_EMAIL", 'feedback@novophp.com');
-
-//upload images config
-define("IMAGES_FILE_MAX_SIZE", 10 * 1024 * 1024);
-define("IMAGES_ALLOW_FILE_TYPE", "jpg,jpeg,gif,png");

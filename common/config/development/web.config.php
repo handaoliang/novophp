@@ -11,11 +11,13 @@
 /**
  * 应用的全局配置文件
 **/
+//Cookies && SESSION Configure
+define("COOKIES_DOMAIN", ".novophp.com");
 
 //系统的WEB路径配置---------------------------------------------------------
-define("WEB_ROOT_PATH",  "http://www.novophp.com");              //网页地址
-define("RES_ROOT_PATH",  "http://www.novophp.com/statics");      //网站图片及CSS等资源的路径。
-define("FILES_PATH",     "http://www.novophp.com/upload_files"); //文件资源的WEB路径。
+define("WEB_ROOT_PATH",  "http://www".COOKIES_DOMAIN);                 //网页地址
+define("RES_ROOT_PATH",  "http://www".COOKIES_DOMAIN."/statics");      //网站图片及CSS等资源的路径。
+define("FILE_WEB_PATH",  "http://www".COOKIES_DOMAIN."/upload_files"); //文件资源的WEB路径。
 
 //主题文件所在路径，为了可更换主题。
 define("APPS_THEME_DIR", "default");
@@ -31,5 +33,6 @@ define("SMARTY_TEMPLATES_DIR", APPS_VIEW_DIR.DIRECTORY_SEPARATOR.APPS_THEME_DIR)
 define("SMARTY_CACHE_MEMCACHE_ADDRESS", "127.0.0.1");
 define("SMARTY_CACHE_MEMCACHE_PORT",    "11211");
 
-//Cookies && SESSION Configure
-define("COOKIES_DOMAIN", ".novophp.com");
+//upload images config
+define("IMAGES_FILE_MAX_SIZE", 10 * 1024 * 1024);
+define("IMAGES_ALLOW_FILE_TYPE", "jpg,jpeg,gif,png");

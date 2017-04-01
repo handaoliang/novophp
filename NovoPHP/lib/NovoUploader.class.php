@@ -11,6 +11,7 @@ class NovoUploader
     private $allowedExtensions;
     private $sizeLimit;
     private $file;
+    private $fileInput;
 
     protected $returnData = array(
         "error"                 =>1,
@@ -23,19 +24,20 @@ class NovoUploader
         "original_file_name"    =>"",
     );
 
-    public function initialize($allowedExtensions, $sizeLimit)
+    public function initialize($allowedExtensions, $sizeLimit, $fileInput)
     {
         $allowedExtensions = array_map("strtolower", $allowedExtensions);
 
         $this->allowedExtensions = $allowedExtensions;
         $this->sizeLimit = $sizeLimit;
+        $this->fileInput = $fileInput;
 
         $this->checkServerSettings();
 
-        if (isset($_GET['upload_file'])) {
-            $this->file = new FileUploaderAjax();
-        } elseif (isset($_FILES['upload_file'])) {
-            $this->file = new FileUploaderForm();
+        if (isset($_GET[$this->fileInput])) {
+            $this->file = new FileUploaderAjax($fileInput);
+        } elseif (isset($_FILES[$this->fileInput])) {
+            $this->file = new FileUploaderForm($fileInput);
         } else {
             $this->file = false;
         }
@@ -190,6 +192,12 @@ class NovoUploader
  */
 class FileUploaderAjax
 {
+    private $fileInput;
+    public function __construct($fileInput)
+    {
+        $this->fileInput = $fileInput;
+    }
+
     function save($path)
     {
         $input = fopen("php://input", "r");
@@ -212,12 +220,12 @@ class FileUploaderAjax
     function getFileInfo()
     {
         //@todo USE Ajax How to get info..
-        return $_GET['file_info'];
+        return $_GET[$this->fileInput];
     }
 
     function getName()
     {
-        return $_GET['upload_file'];
+        return $_GET[$this->fileInput];
     }
 
     function getSize()
@@ -235,9 +243,15 @@ class FileUploaderAjax
  */
 class FileUploaderForm
 {
+    private $fileInput;
+    public function __construct($fileInput)
+    {
+        $this->fileInput = $fileInput;
+    }
+
     function save($path)
     {
-        if(!move_uploaded_file($_FILES['upload_file']['tmp_name'], $path)){
+        if(!move_uploaded_file($_FILES[$this->fileInput]['tmp_name'], $path)){
             return false;
         }
         return true;
@@ -245,16 +259,16 @@ class FileUploaderForm
 
     function getFileInfo()
     {
-        return $_FILES['upload_file'];
+        return $_FILES[$this->fileInput];
     }
 
     function getName()
     {
-        return $_FILES['upload_file']['name'];
+        return $_FILES[$this->fileInput]['name'];
     }
 
     function getSize()
     {
-        return $_FILES['upload_file']['size'];
+        return $_FILES[$this->fileInput]['size'];
     }
 }

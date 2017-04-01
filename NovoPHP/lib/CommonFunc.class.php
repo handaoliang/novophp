@@ -249,8 +249,8 @@ class CommonFunc {
                 $right_arr[] = $array[$i];
             }
         }
-        $left_arr = quickSort($left_arr);
-        $right_arr = quickSort($right_arr);
+        $left_arr = self::quickSort($left_arr);
+        $right_arr = self::quickSort($right_arr);
 
         return array_merge($left_arr, array($key), $right_arr);
     }
@@ -584,9 +584,9 @@ class CommonFunc {
      **/
     public static function createToken()
     {
-        $randString = randStr(16);
+        $randString = self::randStr(16);
         $hashString = md5(base64_encode(pack('N5', mt_rand(), mt_rand(), mt_rand(), mt_rand(), uniqid())));
-        return md5($hashString.$randString.getMicrotime().uniqid());
+        return md5($hashString.$randString.self::getMicrotime().uniqid());
     }
 
     /**
@@ -596,7 +596,7 @@ class CommonFunc {
      **/
     public static function createTSToken()
     {
-        return createToken().time();
+        return self::createToken().time();
     }
 
     /**

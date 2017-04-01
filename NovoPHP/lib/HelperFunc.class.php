@@ -34,7 +34,7 @@ class HelperFunc{
      **/
     public static function hashFileSavePath($savePath, $fileName='', $isHashSaving=true, $randomFileName=true)
     {
-        $hashFileName = $randomFileName ? md5(randStr(20).$fileName.getMicrotime().uniqid()) : md5($fileName);
+        $hashFileName = $randomFileName ? md5(CommonFunc::randStr(20).$fileName.CommonFunc::getMicrotime().uniqid()) : md5($fileName);
 
         $fileSaveDir = $savePath;
         $hashFilePath = '';
@@ -107,7 +107,7 @@ class HelperFunc{
         if(isset($_COOKIE["v_token"])){
             $hashToken = md5($_COOKIE["v_token"]);
         }else{
-            $verifyToken = md5(createToken());
+            $verifyToken = md5(self::createToken());
             setcookie('v_token', $verifyToken, 0, "/", COOKIES_DOMAIN);
             $hashToken = md5($verifyToken);
         }

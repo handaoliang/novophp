@@ -147,7 +147,7 @@ class NovoUploader
         }
 
         //创建保存路径
-        $hashFileInfo = hashFileSavePath($uploadDirectory, $currentFileName, $isHashSaving);
+        $hashFileInfo = HelperFunc::hashFileSavePath($uploadDirectory, $currentFileName, $isHashSaving);
 
         $hashFileName = $hashFileInfo["file_name"];
         $hashFilePath = $hashFileInfo["file_path"];
@@ -160,7 +160,7 @@ class NovoUploader
         if(!$replaceOldFile){
             //don't overwrite previous files that were uploaded
             if(file_exists($fileSavePath.DIRECTORY_SEPARATOR.$hashFileName.'.'.$ext)) {
-                $hashFileInfo = hashFileSavePath($uploadDirectory, $currentFileName, $isHashSaving);
+                $hashFileInfo = HelperFunc::hashFileSavePath($uploadDirectory, $currentFileName, $isHashSaving);
                 $hashFileName = $hashFileInfo["file_name"];
                 $hashFilePath = $hashFileInfo["file_path"];
                 $fileSavePath = $uploadDirectory;

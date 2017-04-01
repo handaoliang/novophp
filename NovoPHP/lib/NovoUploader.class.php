@@ -56,14 +56,15 @@ class NovoUploader
 
     private function toBytes($str)
     {
-        $val = trim($str);
-        $last = strtolower($str[strlen($str)-1]);
-        switch($last) {
-            case 'g': $val *= 1024;
-            case 'm': $val *= 1024;
-            case 'k': $val *= 1024;
+        $number = intval(substr(trim($str), 0, -1));
+        switch(strtoupper(substr($str,-1))) {
+            case 'G':
+                return $number * pow(1024, 3);
+            case 'M':
+                return $number * pow(1024, 2);
+            case 'K':
+                return $number * pow(1024);
         }
-        return $val;
     }
 
     public function asidoResizeImg($args=array(), $crop=false)

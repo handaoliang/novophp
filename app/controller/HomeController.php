@@ -1,9 +1,9 @@
 <?php
 class HomeController extends AppsController {
 
-    //页面需要身份验证才能进行操作。
-    //public $isAuthRequire = true;
-    
+    //是否需要身份验证才能进行操作。
+    public $isAuthRequire = FALSE;
+
     protected $defautJSONData = array(
         "error"     =>1,
         "msg"       =>"",
@@ -49,7 +49,7 @@ class HomeController extends AppsController {
     {
         echo "This is Login method..";
     }
-    
+
     public function do_api()
     {
 

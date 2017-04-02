@@ -18,13 +18,13 @@ class HomeModel extends NovoMySQLiData
 
     public function __construct()
     {
-        $this->MySQLDBConfig = NovoLoader::loadAppsConfig('mysql', $this->AppsDBVolumes);
+        $this->MySQLDBConfig = NovoLoader::loadConfig('mysql', $this->AppsDBVolumes);
         $this->DBTablePre = $this->MySQLDBConfig["db_table_pre"];
         $this->MySQLQueryDB = $this->AppsQueryDB;
 
         parent::__construct();
 
-        $memcacheConfig = NovoLoader::loadAppsConfig('memcache');
+        $memcacheConfig = NovoLoader::loadConfig('memcache');
         if(count($memcacheConfig) == 0
             || !isset($memcacheConfig["memcache_namespace"])
             || !isset($memcacheConfig["memcache_server"])

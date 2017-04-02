@@ -152,23 +152,24 @@ FileName:~/app/controller/HomeController.php
 <pre>
 class HomeController extends AppsController {
 
-    //页面需要身份验证才能进行操作。
-    //public $isAuthRequire = true;
+    //是否需要身份验证才能进行操作。
+    public $isAuthRequire = FALSE;
 
-    //先映射一个ActionMap。
-    protected $ActionsMap = array(
-        "index"         =>"doIndex",
+    protected $defautJSONData = array(
+        "error"     =>1,
+        "msg"       =>"",
+        "data"      =>"",
+        "code"      =>"",
     );
 
-    //构造函数
     public function __construct()
     {
         parent::__construct();
     }
 
-    //执行函数体
     //可以这样访问：http://www.novophp.com/home/index/your_name/your_password.html
-    public function doIndex($name=NULL, $password=NULL){
+    public function do_index($name=NULL, $password=NULL)
+    {
         if(AppsFunc::checkUserSignIn()){
             header("location:/dashboard/");
         }
@@ -177,21 +178,33 @@ class HomeController extends AppsController {
             "frame_version"     =>"1.0.5",
         );
         var_dump($name);
-        echo "\r\n";
+        echo "<br />";
         var_dump($password);
-        echo "\r\n";
+        echo "<br />";
         $homeArrayString = CommonFunc::simplePackArray($homeArray);
-        echo "Pack Array is: " . $homeArrayString . "\r\n";
+        echo "Pack Array is: " . $homeArrayString . "<br />";
         print_r(CommonFunc::simpleUnpackArray($homeArrayString));
-        echo "\r\n";
+        echo "<br />";
         $uriStr = CommonFunc::packURIString(12311123);
-        echo $uriStr."\r\n";
-        echo CommonFunc::unpackURIString($uriStr)."\r\n";
-        $homeModels = $this->getModelByName("home");
-        $homeData = $homeModels->getHomeData();
-        $this->smarty->assign("home_data", $homeData);
+        echo $uriStr."<br />";
+        echo CommonFunc::unpackURIString($uriStr)."<br />";
+        print_r(HomeApi::init(0)->getHomeData())."<br />";
+        //$homeModels = $this->getModelByName("home");
+        //$homeData = $homeModels->getHomeData();
+        //$this->smarty->assign("home_data", $homeData);
+        $this->smarty->assign("test_string", "测试字符串截取啊啊啊啊啊啊");
         $this->smarty->assign("timestamp", time());
-        $this->smarty->display("Home/indexView.tpl");
+        $this->smarty->display("home/index.tpl");
+    }
+    public function do_login()
+    {
+        echo "This is Login method..";
+    }
+
+    public function do_api()
+    {
+
+        CommonFunc::echoJSONData($this->defautJSONData);
     }
 
 }
@@ -207,14 +220,18 @@ FileName：~/common/model/HomeModel.class.php
 <pre>
 class HomeModel extends NovoMySQLiData
 {
+    protected $AppsDBVolumes = "common_db";
+    protected $AppsQueryDB = "master";
 
     public function __construct()
     {
-        $this->MySQLDBConfig = NovoLoader::loadAppsConfig('mysql');
-        $this->MySQLDBSetting = "master";
+        $this->MySQLDBConfig = NovoLoader::loadConfig('mysql', $this->AppsDBVolumes);
+        $this->DBTablePre = $this->MySQLDBConfig["db_table_pre"];
+        $this->MySQLQueryDB = $this->AppsQueryDB;
+
         parent::__construct();
 
-        $memcacheConfig = NovoLoader::loadAppsConfig('memcache');
+        $memcacheConfig = NovoLoader::loadConfig('memcache');
         if(count($memcacheConfig) == 0
             || !isset($memcacheConfig["memcache_namespace"])
             || !isset($memcacheConfig["memcache_server"])
@@ -230,6 +247,9 @@ class HomeModel extends NovoMySQLiData
 
     public function  getHomeData()
     {
-        return "www.novophp.com";
+        $dbName = $this->DBTablePre."options";
+        $sql = "SELECT * FROM {$dbName} limit 10";
+        return $this->getAll($sql);
     }
-}</pre>
+}
+</pre>

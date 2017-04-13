@@ -10,6 +10,10 @@
 **/
 
 //网站站入口文件
-require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."Configs".DIRECTORY_SEPARATOR."AppsInitialize.php";
+require_once dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR."lib".DIRECTORY_SEPARATOR."app.init.php";
 
-BaseInterface::initInterface();
+$_GET["c"] = "users";
+$_GET["m"] = "auto_sign_in";
+$_GET["t"] = "json";
+
+NovoInterface::initInterface();

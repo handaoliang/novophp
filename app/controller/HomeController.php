@@ -4,11 +4,11 @@ class HomeController extends AppsController {
     //是否需要身份验证才能进行操作。
     public $isAuthRequire = FALSE;
 
-    protected $defautJSONData = array(
-        "error"     =>1,
-        "msg"       =>"",
-        "data"      =>"",
-        "code"      =>"",
+    protected $defaultJSONData = array(
+        "err"  =>1,
+        "msg"  =>"",
+        "data" =>"",
+        "code" =>"",
     );
 
     public function __construct()
@@ -53,7 +53,7 @@ class HomeController extends AppsController {
     public function do_api()
     {
 
-        CommonFunc::echoJSONData($this->defautJSONData);
+        CommonFunc::echoJSONData($this->defaultJSONData);
     }
 
 }

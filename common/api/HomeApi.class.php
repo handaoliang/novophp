@@ -22,7 +22,8 @@ class HomeApi
     {
         self::$appid = $appid;
     }
-    #初始化
+
+    //初始化API，不同的应用传入不同的ID。
     public static function init($appid = 0)
     {
         if (!isset(self::$instances[$appid])) {

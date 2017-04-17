@@ -480,7 +480,7 @@ class CommonFunc {
      **/
     public static function packArray($inArray)
     {
-        return packString(serialize($inArray));
+        return self::packString(serialize($inArray));
     }
 
     /**
@@ -490,7 +490,7 @@ class CommonFunc {
      **/
     public static function unpackArray($inString)
     {
-        return unserialize(unpackString($inString));
+        return unserialize(self::unpackString($inString));
     }
 
     /**

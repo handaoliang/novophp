@@ -26,22 +26,21 @@ class HelperFunc{
 
     /**
      * 散列存储
-     * @param $savePath - 本地保存的路径
+     * @param $fileSavePath - 本地保存的路径
      * @param $fileName - 原始文件名
      * @param $isHashSaving - 是否散列存储。
      * @param $randomFileName - 是否生成随机的Hash文件名。
      * @return array
      **/
-    public static function hashFileSavePath($savePath, $fileName='', $isHashSaving=true, $randomFileName=true)
+    public static function hashFileSavePath($fileSavePath, $fileName='', $isHashSaving=true, $randomFileName=true)
     {
         $hashFileName = $randomFileName ? md5(CommonFunc::randStr(20).$fileName.CommonFunc::getMicrotime().uniqid()) : md5($fileName);
 
-        $fileSaveDir = $savePath;
         $hashFilePath = '';
         //是否散列存储。
         if($isHashSaving){
             $hashFilePath = substr($hashFileName, 0, 1).DIRECTORY_SEPARATOR.substr($hashFileName, 1, 2);
-            $fileSaveDir = $savePath.DIRECTORY_SEPARATOR.$hashFilePath;
+            $fileSavePath = $fileSavePath.DIRECTORY_SEPARATOR.$hashFilePath;
         }
 
         $fileInfo = array(
@@ -50,8 +49,8 @@ class HelperFunc{
             "error"         =>0
         );
 
-        if(!is_dir($fileSaveDir)){
-            $result = mkdir($fileSaveDir, 0777, true);
+        if(!is_dir($fileSavePath)){
+            $result = mkdir($fileSavePath, 0777, true);
             if(!$result){
                 $fileInfo["error"] = 1;
             }
@@ -64,17 +63,8 @@ class HelperFunc{
      * @param $fileName, $localFilePath
      * @return string
      **/
-    public static function getHashFileSavePath($fileName='', $localFilePath='')
+    public static function getHashFileSavePath($fileName, $localFilePath='')
     {
-        if($fileName == ''){
-            return false;
-        }
-        if($fileName == "default.png" 
-            || $fileName == "default_female.png" 
-            || $fileName == "default_male.png"
-        ){
-            return "web";
-        }
         $hashFilePath = substr($fileName, 0, 1).DIRECTORY_SEPARATOR.substr($fileName, 1, 2);
         if($localFilePath != ""){
             return $localFilePath.DIRECTORY_SEPARATOR.$hashFilePath;
@@ -92,10 +82,10 @@ class HelperFunc{
         $pattern = "/(http[s]?:\/\/)/is";
         if(preg_match($pattern, $fileName)){
             return $fileName;
-        }else{
-            $hashFilePath = substr($fileName, 0, 1)."/".substr($fileName, 1, 2);
-            return $baseWebPath."/".$hashFilePath."/".$fileName;
         }
+
+        $hashFilePath = substr($fileName, 0, 1)."/".substr($fileName, 1, 2);
+        return $baseWebPath."/".$hashFilePath."/".$fileName;
     }
 
     /**

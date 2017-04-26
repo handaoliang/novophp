@@ -2,8 +2,10 @@
 class HelperController extends AppsController {
 
     protected $returnData = array(
-        "error"     =>1,
-        "msg"       =>"",
+        "err"  =>1,
+        "msg"  =>"",
+        "data" =>"",
+        "code" =>"",
     );
 
     public function __construct()
@@ -65,7 +67,7 @@ class HelperController extends AppsController {
             echo json_encode($this->returnData);
             exit;
         }else{
-            $this->returnData["error"] = 0;
+            $this->returnData["err"] = 0;
             echo json_encode($this->returnData);
             exit;
         }

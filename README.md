@@ -151,7 +151,9 @@ FileName:~/app/controller/HomeController.php
 </pre>
 
 保持Controller的Class Name与文件名高度一致
-<pre>
+
+```php
+
 class HomeController extends AppsController {
 
     //是否需要身份验证才能进行操作。
@@ -210,7 +212,7 @@ class HomeController extends AppsController {
     }
 
 }
-</pre>
+```
 
 
 - 创建Model：

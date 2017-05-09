@@ -134,7 +134,7 @@
     }
 </pre>
 
-###四、php-fpm.conf配置：
+### 四、php-fpm.conf配置：
 
 将.do文件映射成PHP文件，这一步也可以不做。
 

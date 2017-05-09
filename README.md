@@ -27,7 +27,7 @@
 - 出于安全考虑，所有文件及文件夹权限建议采用www:www，需要写权限的文件夹不置777权限。
 
 ### 二、目录结构：
-<pre>
+```
 .
 ├── NovoPHP
 │   ├── core
@@ -92,11 +92,11 @@
 │   └── model
 │       └── HomeModel.class.php
 └── tt.txt
-</pre>
+```
 
 ### 三、Nginx Config 配置：
 
-<pre>
+```
     server
     {
         listen       80;
@@ -132,28 +132,27 @@
 
         access_log /data/logs/www_novophp_com_access.log access_log_format;
     }
-</pre>
+```
 
 ### 四、php-fpm.conf配置：
 
 将.do文件映射成PHP文件，这一步也可以不做。
 
-<pre>
+```
 ; 将.do的文件，解析成PHP
 security.limit_extensions = .do .php .php3 .php4 .php5
-</pre>
+```
 
 ### 五、进阶教程：
 
 - 创建Controller：
-<pre>
+```
 FileName:~/app/controller/HomeController.php
-</pre>
+```
 
 保持Controller的Class Name与文件名高度一致
 
 ```php
-
 class HomeController extends AppsController {
 
     //是否需要身份验证才能进行操作。
@@ -216,12 +215,14 @@ class HomeController extends AppsController {
 
 
 - 创建Model：
-<pre>
+
+```
 FileName：~/common/model/HomeModel.class.php
-</pre>
+```
 
 保持Class Name与文件名高度一致
-<pre>
+
+```php
 class HomeModel extends NovoMySQLiData
 {
     protected $AppsDBVolumes = "common_db";
@@ -256,4 +257,4 @@ class HomeModel extends NovoMySQLiData
         return $this->getAll($sql);
     }
 }
-</pre>
+```

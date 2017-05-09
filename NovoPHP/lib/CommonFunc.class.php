@@ -13,6 +13,13 @@
 **/
 class CommonFunc {
 
+    public static $defaultReturnArray = array(
+        "error"     =>1,
+        "msg"       =>"System default error message..",
+        "data"      =>"",
+        "code"      =>"",
+    );
+
     /*
      * 判断并获取GET数据
      * @param $name:field name;
@@ -889,18 +896,36 @@ class CommonFunc {
     }
 
     /*
-     * 打包并输出JSON字符串
-     * @param string $Array;
+     * 打包并输出json字符串
+     * @param Array $array;
      * @return NULL;
      */
     public static function echoJSONData($array)
     {
         $jsonString = json_encode($array, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        self::switchMimesHeader("json");
         if(!$jsonString){
-            echo "Generate JSON Failed - Illegal key, value pair.";
+            self::$defaultReturnArray["msg"] = "Generate JSON Failed - Illegal key, value pair.";
+            echo json_encode(self::$defaultReturnArray);
             exit;
         }
-        self::switchMimesHeader("json");
         echo $jsonString;
+    }
+
+    /*
+     * 打包并输出jsonp字符串
+     * @param String $callbackFuncStr;
+     * @param Array $array;
+     * @return NULL;
+     */
+    public static function echoJSONPData($callbackFuncStr, $array)
+    {
+        $jsonString = json_encode($array, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        if(!$jsonString){
+            self::$defaultReturnArray["msg"] = "Generate JSON Failed - Illegal key, value pair.";
+            echo $callbackFuncStr."(".json_encode(self::$defaultReturnArray).")";
+            exit;
+        }
+        echo $callbackFuncStr."(".$jsonString.")";
     }
 }

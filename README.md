@@ -136,6 +136,8 @@
 
 ###四、php-fpm.conf配置：
 
+将.do文件映射成PHP文件，这一步也可以不做。
+
 <pre>
 ; 将.do的文件，解析成PHP
 security.limit_extensions = .do .php .php3 .php4 .php5

@@ -81,25 +81,6 @@ abstract class NovoController
 
     public function dispatchAction()
     {
-        /*
-        switch($this->requestDataType)
-        {
-            case "json":
-                header('Cache-Control: no-cache, must-revalidate');
-                header("Content-Type:application/json; charset=UTF-8");
-                break;
-            case "txt":
-                header("Content-Type:text/plain; charset=UTF-8");
-                break;
-            case "shtml":
-                header("Content-Type:text/html; charset=UTF-8");
-                break;
-            default:
-                header("Content-Type:text/html; charset=UTF-8");
-                break;
-        }
-         */
-
         //执行模板呈现之前，将Controller和Actions的名字先预设上，模板可能要调用。
         $this->smarty->assign("controller", $this->controllerName);
         $this->smarty->assign("actions", $this->actionsName);

@@ -13,6 +13,8 @@
 **/
 define('ENVIRONMENT', isset($_SERVER['NOVO_RUNNING_ENV']) ? $_SERVER['NOVO_RUNNING_ENV'] : 'production');
 
+header("X-Powered-By:NovoPHP");
+
 switch (ENVIRONMENT)
 {
     //开发环境

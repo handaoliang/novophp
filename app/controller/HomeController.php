@@ -40,7 +40,8 @@ class HomeController extends AppsController {
         print_r(HomeApi::init(0)->getHomeData())."<br />";
         //$homeModels = $this->getModelByName("home");
         //$homeData = $homeModels->getHomeData();
-        //$this->smarty->assign("home_data", $homeData);
+        $homeData = "";
+        $this->smarty->assign("home_data", $homeData);
         $this->smarty->assign("test_string", "测试字符串截取啊啊啊啊啊啊");
         $this->smarty->assign("timestamp", time());
         $this->smarty->display("home/index.tpl");

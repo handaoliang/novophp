@@ -1,4 +1,4 @@
-{{include file="common/headerView.tpl"}}
+{{include file="common/header.tpl"}}
     <title>NovoPHP.com</title>
 </head>
 
@@ -11,7 +11,6 @@
     Language: {{$lang}}<br />
     Web Root Path: {{$web}}<br />
     Resource Root Path: {{$res}}<br />
-    Files Path: {{$files}}<br />
     String:{{CommonFunc::mbString($test_string,3)}}
 </body>
 </html>

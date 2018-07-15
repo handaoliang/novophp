@@ -64,9 +64,10 @@ class NovoInterface {
         $userController = !empty($userController) ? $userController : "home";
         $userAction = !empty($userAction) ? $userAction : "index";
 
-        //允许使用类似user_profile，这样的命名空间，这个命名空间将被转化成UserProfile。
+        //允许使用类似user_profile和user-profile这样的命名空间，这个命名空间将被转化成UserProfile。
         //转换“_”符号到本框架类名的命名空间。
-        $tempClassNameArr = explode("_", $userController);
+        //$tempClassNameArr = explode("_", $userController);
+        $tempClassNameArr = preg_split("/(_|-)/", $userController);
         $tempClassNameStr = "";
         foreach($tempClassNameArr as $value){
             $tempClassNameStr .= ucfirst(trim($value));

@@ -47,13 +47,13 @@ class NovoStringEncrypt
         $nh1 = rand(0,64);
         $nh2 = rand(0,64);
         $nh3 = rand(0,64);
-        $ch1 = self::$baseChars{$nh1};
-        $ch2 = self::$baseChars{$nh2};
-        $ch3 = self::$baseChars{$nh3};
+        $ch1 = self::$baseChars[$nh1];
+        $ch2 = self::$baseChars[$nh2];
+        $ch3 = self::$baseChars[$nh3];
         $nhnum = $nh1 + $nh2 + $nh3;
         $knum = 0;$i = 0;
-        while(isset($key{$i})){
-            $knum += ord($key{$i++});
+        while(isset($key[$i])){
+            $knum += ord($key[$i++]);
         }
         $mdKey = substr(md5(md5(md5($key.$ch1).$ch2.self::$baseKey).$ch3),$nhnum%8,$knum%8+16);
         $str = base64_encode($normalString);
@@ -64,8 +64,8 @@ class NovoStringEncrypt
         $klen = strlen($mdKey);
         for ($i=0; $i<$tlen; $i++) {
             $k = $k == $klen ? 0 : $k;
-            $j = ($nhnum+strpos(self::$baseChars,$str{$i})+ord($mdKey{$k++}))%64;
-            $tmp .= self::$baseChars{$j};
+            $j = ($nhnum+strpos(self::$baseChars,$str[$i])+ord($mdKey[$k++]))%64;
+            $tmp .= self::$baseChars[$j];
         }
 
         $tmplen = strlen($tmp);
@@ -79,16 +79,16 @@ class NovoStringEncrypt
     {
         $knum = 0;$i = 0;
         $tlen = strlen($encryptedString);
-        while(isset($key{$i})){
-            $knum += ord($key{$i++});
+        while(isset($key[$i])){
+            $knum += ord($key[$i++]);
         }
-        $ch1 = $encryptedString{$knum % $tlen};
+        $ch1 = $encryptedString[$knum % $tlen];
         $nh1 = strpos(self::$baseChars,$ch1);
         $str = substr_replace($encryptedString,'',$knum % $tlen--,1);
-        $ch2 = $str{$nh1 % $tlen};
+        $ch2 = $str[$nh1 % $tlen];
         $nh2 = strpos(self::$baseChars,$ch2);
         $str = substr_replace($str,'',$nh1 % $tlen--,1);
-        $ch3 = $str{$nh2 % $tlen};
+        $ch3 = $str[$nh2 % $tlen];
         $nh3 = strpos(self::$baseChars,$ch3);
         $str = substr_replace($str,'',$nh2 % $tlen--,1);
         $nhnum = $nh1 + $nh2 + $nh3;
@@ -99,9 +99,9 @@ class NovoStringEncrypt
         $klen = strlen($mdKey);
         for ($i=0; $i<$tlen; $i++) {
             $k = $k == $klen ? 0 : $k;
-            $j = strpos(self::$baseChars,$str{$i})-$nhnum - ord($mdKey{$k++});
+            $j = strpos(self::$baseChars,$str[$i])-$nhnum - ord($mdKey[$k++]);
             while ($j<0) $j+=64;
-            $tmp .= self::$baseChars{$j};
+            $tmp .= self::$baseChars[$j];
         }
         $tmp = str_replace(array('-','_','.'),array('+','/','='),$tmp);
         return trim(base64_decode($tmp));
